@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: trello
+  data:
+    mongodb:
+      database: ${spring.application.name}
+  security:
+    user:
+      name: ${spring.application.name}
+      password: ${spring.application.name}
+server:
+  servlet:
+    context-path: /${spring.application.name}
