@@ -11,3 +11,4 @@ spring:
 server:
   servlet:
     context-path: /${spring.application.name}
+  port: 8098
