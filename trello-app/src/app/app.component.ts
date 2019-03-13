@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { TableService } from 'src/service/table.service';
+import { BoardService } from 'src/service/board.service';
 import { FormControl } from '@angular/forms';
-import { Table } from 'src/model/table';
+import { Board } from 'src/model/board';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -10,20 +10,20 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  tableName = new FormControl('');
-  tables: Table[];
+  boardName = new FormControl('');
+  boards: Board[];
 
-  constructor(private tableService: TableService) {
-    tableService.getAll().pipe(take(1)).subscribe(tables => this.tables = tables);
+  constructor(private boardService: BoardService) {
+    boardService.getAll().pipe(take(1)).subscribe(boards => this.boards = boards);
   }
 
-  createTable() {
-    this.tableService.create({ name: this.tableName.value}).pipe(take(1))
-      .subscribe(table => this.tables.push(table));
+  createBoard() {
+    this.boardService.create(this.boardName.value).pipe(take(1))
+      .subscribe(board => this.boards.push(board));
   }
 
-  deleteTable(id: string) {
-    this.tableService.delete(id).pipe(take(1))
-      .subscribe(() => this.tables = this.tables.filter(table => table.id !== id));
+  deleteBoard(id: string) {
+    this.boardService.delete(id).pipe(take(1))
+      .subscribe(() => this.boards = this.boards.filter(board => board.id !== id));
   }
 }

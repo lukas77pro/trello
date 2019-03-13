@@ -1,11 +1,11 @@
 <div>
   <label>
-    Add new table:
-    <input type="text" [formControl]="tableName">
-    <button (click)="createTable()">Create</button>
+    Add new board:
+    <input type="text" [formControl]="boardName">
+    <button (click)="createBoard()">Create</button>
   </label>
 </div>
-<div *ngFor="let table of tables">
-  {{table.name}}
-  <button (click)="deleteTable(table.id)">Delete</button>
+<div *ngFor="let board of boards">
+  {{board.name}}
+  <button (click)="deleteBoard(board.id)">Delete</button>
 </div>
