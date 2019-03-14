@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Board } from 'src/model/board';
+import { Board } from '../model/board';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({

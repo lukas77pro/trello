@@ -1,0 +1,10 @@
+<div>
+  <mat-form-field style="margin-right: 4px">
+    <input matNativeControl placeholder="Add new board" [formControl]="boardName">
+  </mat-form-field>
+  <button mat-flat-button color="primary" (click)="createBoard()">Create</button>
+</div>
+<mat-card style="margin-bottom: 4px" *ngFor="let board of boards">
+  {{board.name}}
+  <button (click)="deleteBoard(board.id)">Delete</button>
+</mat-card>

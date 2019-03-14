@@ -1,11 +1,4 @@
-<div>
-  <label>
-    Add new board:
-    <input type="text" [formControl]="boardName">
-    <button (click)="createBoard()">Create</button>
-  </label>
-</div>
-<div *ngFor="let board of boards">
-  {{board.name}}
-  <button (click)="deleteBoard(board.id)">Delete</button>
+<app-navbar></app-navbar>
+<div class="content">
+    <router-outlet></router-outlet>
 </div>
