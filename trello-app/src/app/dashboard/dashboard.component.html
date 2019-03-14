@@ -4,7 +4,7 @@
   </mat-form-field>
   <button mat-flat-button color="primary" (click)="createBoard()">Create</button>
 </div>
-<mat-card style="margin-bottom: 4px" *ngFor="let board of boards">
-  {{board.name}}
-  <button (click)="deleteBoard(board.id)">Delete</button>
-</mat-card>
+<div cdkDropList cdkDropListOrientation="horizontal" cdkDropListLockAxis="x"  class="board-container" (cdkDropListDropped)="boardDropped($event)">
+  <app-board cdkDrag *ngFor="let board of boards" [board]="board" >
+  </app-board>
+</div>

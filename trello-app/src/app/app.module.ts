@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CardlistComponent } from './cardlist/cardlist.component';
 import { CardComponent } from './card/card.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatToolbarModule,
@@ -41,7 +42,8 @@ import {
   MatSnackBarModule,
   MatTableModule,
   MatSortModule,
-  MatPaginatorModule} from '@angular/material';
+  MatPaginatorModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import {
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

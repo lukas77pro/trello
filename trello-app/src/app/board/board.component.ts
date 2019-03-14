@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Board } from '../../model/board';
 
 @Component({
   selector: 'app-board',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  @Input() board: Board;
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }
