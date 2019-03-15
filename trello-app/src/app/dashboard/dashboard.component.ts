@@ -5,7 +5,7 @@ import { BoardService } from '../../service/board.service';
 import { EventService } from '../../event/event.service';
 import { BoardCreatedEvent, BoardDeletedEvent } from '../../event/events';
 import { CdkDragDrop } from '@angular/cdk/drag-drop/typings/drag-events';
-import { CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,9 +19,10 @@ export class DashboardComponent {
   constructor(private boardService: BoardService, private eventService: EventService) {
     // boardService.getAll().subscribe(boards => this.boards = boards);
     this.boards = [
-      { id: '1', name: 'board1', cardLists: []},
-      { id: '2', name: 'board2', cardLists: []},
-      { id: '3', name: 'board3', cardLists: []},
+      { id: '1', name: 'board1', cardLists: [], order: 0},
+      { id: '2', name: 'board2', cardLists: [], order: 1},
+      { id: '3', name: 'board3', cardLists: [], order: 2},
+      { id: '4', name: 'board4', cardLists: [], order: 3}
     ];
   }
 
@@ -41,9 +42,6 @@ export class DashboardComponent {
 
   boardDropped(event: CdkDragDrop<Board[]>) {
     console.log(event);
-    const temp = this.boards[event.previousIndex];
-    this.boards.sort()
-    this.boards[event.previousIndex] = this.boards[event.currentIndex];
-    this.boards[event.currentIndex] = temp;
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
   }
 }
