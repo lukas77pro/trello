@@ -23,6 +23,7 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatSliderModule,
+  MatRippleModule,
   MatSlideToggleModule,
   MatMenuModule,
   MatSidenavModule,
@@ -44,6 +45,8 @@ import {
   MatSortModule,
   MatPaginatorModule
 } from '@angular/material';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import {
     DashboardComponent,
     CardlistComponent,
     CardComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +77,7 @@ import {
     MatSliderModule,
     MatSlideToggleModule,
     MatMenuModule,
+    MatRippleModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,

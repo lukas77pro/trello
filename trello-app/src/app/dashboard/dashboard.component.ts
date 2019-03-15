@@ -42,6 +42,7 @@ export class DashboardComponent {
   boardDropped(event: CdkDragDrop<Board[]>) {
     console.log(event);
     const temp = this.boards[event.previousIndex];
+    this.boards.sort()
     this.boards[event.previousIndex] = this.boards[event.currentIndex];
     this.boards[event.currentIndex] = temp;
   }

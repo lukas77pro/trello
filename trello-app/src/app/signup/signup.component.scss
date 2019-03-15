@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    justify-content: center;
+
+    .container {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    a, a:visited, a:hover, a:active {
+        color: blue;
+    }
+}

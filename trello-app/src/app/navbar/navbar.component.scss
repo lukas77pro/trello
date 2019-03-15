@@ -1,3 +1,17 @@
 :host {
     margin-bottom: 8px;
+
+    mat-toolbar {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        
+        .account-container {
+            display: flex;
+            a {
+                margin-left: 8px;
+            }
+        }
+    }
+
 }
