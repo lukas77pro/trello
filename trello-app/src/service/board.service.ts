@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Board } from '../model/board';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +34,14 @@ export class BoardService {
 
   delete(id: String): Observable<{}> {
     return this.httpClient.delete(`${this.BASE_URL}/boards/${id}`, { headers: this.HEADERS });
+  }
+
+  move(previousIndex: number, currentIndex: number): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/boards/move`, {}, {
+      headers: this.HEADERS,
+      params: new HttpParams()
+        .append('previousIndex', previousIndex.toString())
+        .append('currentIndex', currentIndex.toString())
+    });
   }
 }

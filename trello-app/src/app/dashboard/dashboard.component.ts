@@ -17,13 +17,7 @@ export class DashboardComponent {
   boards: Board[];
 
   constructor(private boardService: BoardService, private eventService: EventService) {
-    // boardService.getAll().subscribe(boards => this.boards = boards);
-    this.boards = [
-      { id: '1', name: 'board1', cardLists: [], order: 0},
-      { id: '2', name: 'board2', cardLists: [], order: 1},
-      { id: '3', name: 'board3', cardLists: [], order: 2},
-      { id: '4', name: 'board4', cardLists: [], order: 3}
-    ];
+    boardService.getAll().subscribe(boards => this.boards = boards);
   }
 
   createBoard() {
@@ -41,7 +35,7 @@ export class DashboardComponent {
   }
 
   boardDropped(event: CdkDragDrop<Board[]>) {
-    console.log(event);
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+    this.boardService.move(event.previousIndex, event.currentIndex).subscribe();
   }
 }
