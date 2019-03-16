@@ -1,10 +1,12 @@
 <h2>My boards</h2>
 <div class="board-container" cdkDropListOrientation="horizontal" cdkDropListLockAxis="x" (cdkDropListDropped)="boardDropped($event)" cdkDropList>
-  <mat-card *ngFor="let board of boards" cdkDrag [routerLink]="['/board', board.id]">
+  <div class="board-item" *ngFor="let board of boards" cdkDrag [routerLink]="['/board', board.id]">
+    <mat-card>
       <mat-card-header>
           <mat-card-title>{{ board.name }}</mat-card-title>
       </mat-card-header>
     </mat-card>  
+  </div>  
   <div>
     <mat-form-field style="margin-right: 4px">
       <input matNativeControl placeholder="Add new board" [formControl]="boardName">

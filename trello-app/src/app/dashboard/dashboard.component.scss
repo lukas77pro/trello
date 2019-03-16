@@ -2,12 +2,16 @@
     display: flex;
     flex-direction: row;
 
-    mat-card {
-        width: 200px;
-        height: 200px;
+    .board-item {
         margin-right: 8px;
         cursor: pointer;
+        outline: none;
     }
+}
+
+mat-card {
+    width: 200px;
+    height: 100px;
 }
 
 .cdk-drag-placeholder {
