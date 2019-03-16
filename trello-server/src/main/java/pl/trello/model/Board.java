@@ -22,4 +22,6 @@ public class Board implements Serializable {
     private String name;
 
     private List<CardList> cardLists;
+
+    private long order;
 }

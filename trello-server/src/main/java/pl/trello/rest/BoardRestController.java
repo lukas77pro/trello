@@ -8,6 +8,7 @@ import pl.trello.repository.BoardRepository;
 import pl.trello.service.BoardService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("boards")
@@ -23,7 +24,9 @@ public class BoardRestController {
 
     @GetMapping
     public List<Board> getAll() {
-        return boardRepository.findAll();
+        return boardRepository.findAllByOrderByOrder().stream()
+                .peek(board -> board.setCardLists(null))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("{id}")
@@ -44,6 +47,11 @@ public class BoardRestController {
             return boardRepository.save(board);
         }
         throw new NotFoundException("Board with ID '" + board.getId() + "' not found");
+    }
+
+    @PutMapping("move")
+    public void move(@RequestParam int previousIndex, @RequestParam int currentIndex) {
+        boardService.move(previousIndex, currentIndex);
     }
 
     @DeleteMapping("{id}")

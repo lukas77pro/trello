@@ -6,6 +6,8 @@ import pl.trello.model.Board;
 import pl.trello.repository.BoardRepository;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class BoardService {
@@ -20,6 +22,15 @@ public class BoardService {
         if (boardRepository.existsByName(name)) {
             throw new AlreadyExistsException("Board with '" + name + "' already exists");
         }
-        return boardRepository.save(Board.builder().name(name).cardLists(new ArrayList<>()).build());
+        return boardRepository.save(
+                Board.builder().name(name).cardLists(new ArrayList<>()).order(boardRepository.count()).build());
+    }
+
+    public void move(int previousIndex, int currentIndex) {
+        List<Board> boards = boardRepository.findAllByOrderByOrder();
+        Board board = boards.remove(previousIndex);
+        boards.add(currentIndex, board);
+        IntStream.range(0, boards.size()).forEach(index -> boards.get(index).setOrder(index));
+        boardRepository.saveAll(boards);
     }
 }
