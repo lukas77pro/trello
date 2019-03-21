@@ -1,19 +1,21 @@
-<div class="container">
-  <h1>Stwórz konto Trello</h1>
-  <h3>Lub <a routerLink="/login">zaloguj się do konta</a></h3>
-  <mat-form-field appearance="outline">
-    <mat-label>Nazwa</mat-label>
-    <input matInput placeholder="np. Jan Kowalski">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>E-mail</mat-label>
-    <input matInput placeholder="np. jan.kowalski@gmail.com">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Hasło</mat-label>
-    <input matInput placeholder="np. **********">
-  </mat-form-field>  
-  <button mat-raised-button color="primary">Stwórz nowe konto</button>
-</div>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h1>Stwórz konto Trello</h1>
+    <h3>Lub <a routerLink="/login">zaloguj się do konta</a></h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Nazwa</mat-label>
+        <input matInput placeholder="np. Jan Kowalski" formControlName="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="np. jan.kowalski@gmail.com" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Hasło</mat-label>
+        <input matInput placeholder="np. **********" type="password" formControlName="password">
+      </mat-form-field>  
+      <button mat-raised-button color="primary">Stwórz nowe konto</button>
+  </div>
+</form>  
 
   

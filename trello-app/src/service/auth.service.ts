@@ -14,8 +14,14 @@ export class AuthService {
 
   }
 
+  signup(user: User) {
+    this.httpClient.get<User>(`${this.BASE_URL}/user`).subscribe(user => {
+      console.log(user);
+    });
+  }
+
   login(username: string, password: string) {
-    this.httpClient.get<User>(`${this.BASE_URL}/login`, {
+    this.httpClient.get<User>(`${this.BASE_URL}/user`, {
       headers: new HttpHeaders().append('Authorization', `Basic ${btoa(`${username}:${password}`)}`)
     }).pipe().subscribe(user => {
       console.log(user);
