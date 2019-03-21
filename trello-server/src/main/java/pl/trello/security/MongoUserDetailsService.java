@@ -1,15 +1,13 @@
 package pl.trello.security;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.trello.model.Role;
+import pl.trello.model.Authority;
 import pl.trello.model.User;
-import pl.trello.repository.RoleRepository;
+import pl.trello.repository.AuthorityRepository;
 import pl.trello.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
@@ -19,12 +17,12 @@ import java.util.Collections;
 public class MongoUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private AuthorityRepository authorityRepository;
     private PasswordEncoder passwordEncoder;
 
-    public MongoUserDetailsService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public MongoUserDetailsService(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -37,13 +35,15 @@ public class MongoUserDetailsService implements UserDetailsService {
 
     @PostConstruct
     public void init() {
-        Role role = roleRepository.findByName("ADMIN")
-                .orElseGet(() -> roleRepository.save(Role.builder().name("ADMIN").build()));
+        Authority authority = authorityRepository.findByAuthority("ADMIN")
+                .orElseGet(() -> authorityRepository.save(Authority.builder().authority("ADMIN").build()));
+        authorityRepository.findByAuthority("USER")
+                .orElseGet(() -> authorityRepository.save(Authority.builder().authority("USER").build()));
         userRepository.findByUsername("trellox").orElseGet(() ->
             userRepository.save(User.builder()
-                    .username("trellox")
+                    .username("trello")
                     .password(passwordEncoder.encode("trello"))
                     .email("admin@trello.pl")
-                    .roles(Collections.singleton(role)).build()));
+                    .authorities(Collections.singleton(authority)).build()));
     }
 }

@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -34,12 +32,7 @@ public class User implements UserDetails, Serializable {
     private String password;
 
     @DBRef
-    private Set<Role> roles;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
+    private Set<Authority> authorities;
 
     @Override
     public boolean isAccountNonExpired() {
