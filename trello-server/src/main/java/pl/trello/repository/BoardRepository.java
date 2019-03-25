@@ -9,5 +9,5 @@ public interface BoardRepository extends MongoRepository<Board, String> {
 
     boolean existsByName(String name);
 
-    List<Board> findAllByOrderByOrder();
+    List<Board> findAllByUserIdOrderByOrder(String userId);
 }

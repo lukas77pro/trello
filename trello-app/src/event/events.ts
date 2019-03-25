@@ -1,4 +1,5 @@
 import { Board } from '../model/board';
+import { User } from 'src/model/user';
 
 export abstract class Event<T> {
     abstract getType(): EventType;
@@ -8,7 +9,9 @@ export abstract class Event<T> {
 export enum EventType {
     BoardCreated,
     BoardUpdated,
-    BoardDeleted
+    BoardDeleted,
+    UserLoggedIn,
+    UserLoggedOut,
 }
 
 export class BoardCreatedEvent extends Event<Board> {
@@ -23,7 +26,17 @@ export class BoardDeletedEvent extends Event<string> {
     getType = () => EventType.BoardDeleted;
 }
 
+export class UserLoggedIn extends Event<User> {
+    getType = () => EventType.UserLoggedIn;
+}
+
+export class UserLoggedOut extends Event<any> {
+    getType = () => EventType.UserLoggedOut;
+}
+
 export type Events =
 | BoardCreatedEvent
 | BoardUpdatedEvent
-| BoardDeletedEvent;
+| BoardDeletedEvent
+| UserLoggedIn
+| UserLoggedOut;

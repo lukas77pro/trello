@@ -2,43 +2,36 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Board } from '../model/board';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
   readonly BASE_URL = 'http://localhost:8098/trello';
-  readonly USERNAME = 'trello';
-  readonly PASSWORD = 'trello';
-  readonly HEADERS = new HttpHeaders({
-    'Authorization': `Basic ${btoa(`${this.USERNAME}:${this.PASSWORD}`)}`
-  });
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private authService: AuthService) { }
 
   getAll(): Observable<Board[]> {
-    return this.httpClient.get<Board[]>(`${this.BASE_URL}/boards`, { headers: this.HEADERS });
+    return this.httpClient.get<Board[]>(`${this.BASE_URL}/boards`, { headers: this.authService.getAuthHeader() });
   }
 
   get(id: String): Observable<Board> {
-    return this.httpClient.get<Board>(`${this.BASE_URL}/boards/${id}`, { headers: this.HEADERS });
+    return this.httpClient.get<Board>(`${this.BASE_URL}/boards/${id}`, { headers: this.authService.getAuthHeader() });
   }
 
   create(boardName: string): Observable<Board> {
-    return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, boardName, {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${btoa(`${this.USERNAME}:${this.PASSWORD}`)}`
-      })
-    });
+    return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, boardName, { headers: this.authService.getAuthHeader() });
   }
 
   delete(id: String): Observable<{}> {
-    return this.httpClient.delete(`${this.BASE_URL}/boards/${id}`, { headers: this.HEADERS });
+    return this.httpClient.delete(`${this.BASE_URL}/boards/${id}`, { headers: this.authService.getAuthHeader() });
   }
 
   move(previousIndex: number, currentIndex: number): Observable<{}> {
     return this.httpClient.put(`${this.BASE_URL}/boards/move`, {}, {
-      headers: this.HEADERS,
+      headers: this.authService.getAuthHeader(),
       params: new HttpParams()
         .append('previousIndex', previousIndex.toString())
         .append('currentIndex', currentIndex.toString())

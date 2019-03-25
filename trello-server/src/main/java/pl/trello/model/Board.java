@@ -24,4 +24,6 @@ public class Board implements Serializable {
     private List<CardList> cardLists;
 
     private long order;
+
+    private String userId;
 }

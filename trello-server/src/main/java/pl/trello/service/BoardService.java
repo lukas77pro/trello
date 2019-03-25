@@ -18,16 +18,16 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Board create(String name) throws AlreadyExistsException {
+    public Board create(String name, String userId) throws AlreadyExistsException {
         if (boardRepository.existsByName(name)) {
             throw new AlreadyExistsException("Board with '" + name + "' already exists");
         }
         return boardRepository.save(
-                Board.builder().name(name).cardLists(new ArrayList<>()).order(boardRepository.count()).build());
+                Board.builder().name(name).userId(userId).cardLists(new ArrayList<>()).order(boardRepository.count()).build());
     }
 
-    public void move(int previousIndex, int currentIndex) {
-        List<Board> boards = boardRepository.findAllByOrderByOrder();
+    public void move(int previousIndex, int currentIndex, String userId) {
+        List<Board> boards = boardRepository.findAllByUserIdOrderByOrder(userId);
         Board board = boards.remove(previousIndex);
         boards.add(currentIndex, board);
         IntStream.range(0, boards.size()).forEach(index -> boards.get(index).setOrder(index));

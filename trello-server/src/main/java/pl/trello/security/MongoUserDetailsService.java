@@ -39,7 +39,7 @@ public class MongoUserDetailsService implements UserDetailsService {
                 .orElseGet(() -> authorityRepository.save(Authority.builder().authority("ADMIN").build()));
         authorityRepository.findByAuthority("USER")
                 .orElseGet(() -> authorityRepository.save(Authority.builder().authority("USER").build()));
-        userRepository.findByUsername("trellox").orElseGet(() ->
+        userRepository.findByUsername("trello").orElseGet(() ->
             userRepository.save(User.builder()
                     .username("trello")
                     .password(passwordEncoder.encode("trello"))

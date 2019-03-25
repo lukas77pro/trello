@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from 'src/service/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -8,18 +10,25 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
   userForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)])
+    username: new FormControl('', [this.required]),
+    email: new FormControl('', [this.required, Validators.email]),
+    password: new FormControl('', [this.required, Validators.minLength(5)])
   });
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    console.log(this.userForm.status);
-    console.log(this.userForm.value);
+    if (this.userForm.status) {
+      this.userService
+        .create(this.userForm.value)
+        .subscribe(message => this.router.navigate(['/login']), error => console.log(error));
+    }
+  }
+
+  private required(control: AbstractControl) {
+    return control.value.trim() ? null : { 'required': true };
   }
 }

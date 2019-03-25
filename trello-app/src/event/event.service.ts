@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subscriber } from './subscriber';
-import { Events, Event, EventType } from './events';
+import { Events, EventType } from './events';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +15,16 @@ export class EventService {
 
   subscribe(subscriber: Subscriber, ...eventTypes: EventType[]) {
     eventTypes.forEach(eventType => this.subscribeForEvent(subscriber, eventType));
-    this.subscribers.forEach((subs, type) => console.log(subs));
+    // this.subscribers.forEach((subs, type) => console.log(subs));
   }
 
   unsubscribe(subscriber: Subscriber) {
     this.subscribers.forEach(eventSubscribers => eventSubscribers.delete(subscriber));
-    this.subscribers.forEach((subs, type) => console.log(subs));
+    // this.subscribers.forEach((subs, type) => console.log(subs));
   }
 
   push(event: Events) {
-    console.log(event);
+    // console.log(event);
     const eventSubscribers = this.subscribers.get(event.getType());
     if (eventSubscribers) {
       eventSubscribers.forEach(subscriber => subscriber.onEventReceived(event));

@@ -1,9 +1,11 @@
 package pl.trello.rest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
 import pl.trello.model.Board;
+import pl.trello.model.User;
 import pl.trello.repository.BoardRepository;
 import pl.trello.service.BoardService;
 
@@ -23,8 +25,8 @@ public class BoardRestController {
     }
 
     @GetMapping
-    public List<Board> getAll() {
-        return boardRepository.findAllByOrderByOrder().stream()
+    public List<Board> getAll(@AuthenticationPrincipal User user) {
+        return boardRepository.findAllByUserIdOrderByOrder(user.getId()).stream()
                 .peek(board -> board.setCardLists(null))
                 .collect(Collectors.toList());
     }
@@ -36,8 +38,8 @@ public class BoardRestController {
     }
 
     @PostMapping
-    public Board create(@RequestBody String name) throws AlreadyExistsException {
-        return boardService.create(name);
+    public Board create(@RequestBody String name, @AuthenticationPrincipal User user) throws AlreadyExistsException {
+        return boardService.create(name, user.getId());
     }
 
     @PutMapping("{id}")
@@ -50,8 +52,8 @@ public class BoardRestController {
     }
 
     @PutMapping("move")
-    public void move(@RequestParam int previousIndex, @RequestParam int currentIndex) {
-        boardService.move(previousIndex, currentIndex);
+    public void move(@RequestParam int previousIndex, @RequestParam int currentIndex, @AuthenticationPrincipal User user) {
+        boardService.move(previousIndex, currentIndex, user.getId());
     }
 
     @DeleteMapping("{id}")
