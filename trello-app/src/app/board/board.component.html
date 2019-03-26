@@ -1,8 +1,22 @@
-<div *ngIf="board$ | async as board">
-    <app-cardlist *ngFor="let cardList of board.cardLists" [cardList]="cardList">
-
-
-    </app-cardlist>
+<div class="cardlist-container" *ngIf="board$ | async as board" cdkDropList (cdkDropListDropped)="onCardListDropped($event)">
+    <div class="cardlist-item" *ngFor="let cardList of board.cardLists" cdkDrag>
+        <mat-card>
+            <mat-card-header cdkDragHandle> 
+                <mat-card-title>
+                    {{ cardList.name }}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div cdkDropListGroup> 
+                    <div cdkDropList [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped($event)">
+                        <div class="card-item" [cdkDragData]="card" *ngFor="let card of cardList.cards" cdkDrag>
+                            <mat-card>{{card.content}}</mat-card>
+                        </div>
+                    </div> 
+                </div>                               
+            </mat-card-content>
+        </mat-card>
+    </div>
     <div>
         <mat-form-field style="margin-right: 4px">
             <input matNativeControl placeholder="Add new card list" [formControl]="cardListName">

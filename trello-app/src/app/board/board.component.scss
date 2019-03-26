@@ -1,3 +1,12 @@
-.card-list {
-    height: 200px;
+.cardlist-container {
+    display: flex;
+}
+
+.cardlist-item {
+    width: 240px;
+    margin-right: 8px; 
+}
+
+.card-item {
+    margin-bottom: 8px; 
 }
