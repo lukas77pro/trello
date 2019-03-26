@@ -5,4 +5,5 @@ export interface Board {
     name: string;
     cardLists: CardList[];
     order: number;
+    userId: string;
 }

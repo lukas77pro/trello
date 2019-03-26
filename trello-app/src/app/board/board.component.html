@@ -1,1 +1,12 @@
-board component
+<div *ngIf="board$ | async as board">
+    <app-cardlist *ngFor="let cardList of board.cardLists" [cardList]="cardList">
+
+
+    </app-cardlist>
+    <div>
+        <mat-form-field style="margin-right: 4px">
+            <input matNativeControl placeholder="Add new card list" [formControl]="cardListName">
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="createCardList(board)">Create</button>
+    </div>
+</div>
