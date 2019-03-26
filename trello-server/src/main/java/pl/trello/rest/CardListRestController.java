@@ -6,7 +6,7 @@ import pl.trello.model.CardList;
 import pl.trello.service.CardListService;
 
 @RestController
-@RequestMapping("cardlist")
+@RequestMapping("boards/{boardId}/cardlists")
 public class CardListRestController {
 
     private CardListService cardListService;
@@ -16,7 +16,7 @@ public class CardListRestController {
     }
 
     @PostMapping
-    public CardList create(@RequestBody String name, @RequestParam String boardId) throws NotFoundException {
-        return cardListService.create(name, boardId);
+    public CardList create(@PathVariable String boardId, @RequestBody String name) throws NotFoundException {
+        return cardListService.create(boardId, name);
     }
 }
