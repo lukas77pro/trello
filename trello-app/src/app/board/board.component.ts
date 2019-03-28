@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { BoardService } from '../../service/board.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CardListService } from '../../service/cardlist.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CardList } from 'src/model/card-list';
 import { Card } from 'src/model/card';
 
@@ -42,8 +42,9 @@ export class BoardComponent implements OnInit {
     console.log(event);
   }
 
-  onCardListDropped(event: CdkDragDrop<CardList[]>) {
-    console.log(event);
+  onCardListDropped(board: Board, event: CdkDragDrop<CardList[]>) {
+    moveItemInArray(board.cardLists, event.previousIndex, event.currentIndex);
+    this.cardListService.move(event.previousIndex, event.currentIndex, board.id).subscribe();
   }
 
   getConnectedList(board: Board): any[] {

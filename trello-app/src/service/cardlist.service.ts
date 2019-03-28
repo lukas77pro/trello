@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CardList } from '../model/card-list';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -16,6 +16,15 @@ export class CardListService {
   create(name: string, boardId: string): Observable<CardList> {
     return this.httpClient.post<CardList>(`${this.BASE_URL}/boards/${boardId}/cardlists`, name, {
       headers: this.authService.getAuthHeader()
+    });
+  }
+
+  move(previousIndex: number, currentIndex: number, boardId: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/boards/${boardId}/cardlists/move`, {}, {
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams()
+        .append('previousIndex', previousIndex.toString())
+        .append('currentIndex', currentIndex.toString())
     });
   }
 }
