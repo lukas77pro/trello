@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.trello.core.Ordered;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,11 +13,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardList implements Serializable{
+public class CardList implements Serializable, Ordered{
 
     private static final long serialVersionUID = 6726852648003272766L;
 
     private String name;
 
     private List<Card> cards;
+
+    private long order;
 }

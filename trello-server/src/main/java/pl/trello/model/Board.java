@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import pl.trello.core.Ordered;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board implements Serializable {
+public class Board implements Serializable, Ordered {
 
     private static final long serialVersionUID = 7483689414553387546L;
     @Id

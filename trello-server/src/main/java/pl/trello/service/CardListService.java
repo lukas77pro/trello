@@ -22,7 +22,7 @@ public class CardListService {
     public CardList create(String boardId, String name) throws NotFoundException {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new NotFoundException("Board with id '" + boardId + "' not found"));
-        CardList cardList = CardList.builder().name(name).cards(cards()).build();
+        CardList cardList = CardList.builder().name(name).cards(cards()).order(board.getCardLists().size()).build();
         board.getCardLists().add(cardList);
         boardRepository.save(board);
         return cardList;
