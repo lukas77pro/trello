@@ -5,8 +5,29 @@
 .cardlist-item {
     width: 240px;
     margin-right: 8px; 
+    background: darken($color: #ffffff, $amount: 3%);
+    
+    .cardlist-title {
+        cursor: grab;
+    }
 }
 
 .card-item {
-    margin-bottom: 8px; 
+    margin: 4px 0;
+    background: white;
+    cursor: grab;
 }
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+  

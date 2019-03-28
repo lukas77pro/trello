@@ -45,4 +45,8 @@ export class BoardComponent implements OnInit {
   onCardListDropped(event: CdkDragDrop<CardList[]>) {
     console.log(event);
   }
+
+  getConnectedList(board: Board): any[] {
+    return board.cardLists.map(cardList => cardList.name);
+  }
 }

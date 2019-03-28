@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CardlistComponent } from './cardlist/cardlist.component';
-import { CardComponent } from './card/card.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,8 +51,6 @@ import { SignupComponent } from './signup/signup.component';
     AppComponent,
     BoardComponent,
     DashboardComponent,
-    CardlistComponent,
-    CardComponent,
     NavbarComponent,
     LoginComponent,
     SignupComponent
