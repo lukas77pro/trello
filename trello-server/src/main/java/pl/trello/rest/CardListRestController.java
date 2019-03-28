@@ -19,4 +19,10 @@ public class CardListRestController {
     public CardList create(@PathVariable String boardId, @RequestBody String name) throws NotFoundException {
         return cardListService.create(boardId, name);
     }
+
+    @PutMapping("move")
+    public void move(@PathVariable String boardId, @RequestParam int previousIndex, @RequestParam int currentIndex) throws NotFoundException {
+        System.out.println(previousIndex + " " + currentIndex);
+        cardListService.move(boardId, previousIndex, currentIndex);
+    }
 }

@@ -35,4 +35,8 @@ public class CardListService {
         cards.add(Card.builder().content("zxc").build());
         return cards;
     }
+
+    public void move(String boardId, int previousIndex, int currentIndex) {
+
+    }
 }

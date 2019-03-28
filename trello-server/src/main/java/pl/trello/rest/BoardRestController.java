@@ -6,35 +6,28 @@ import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
 import pl.trello.model.Board;
 import pl.trello.model.User;
-import pl.trello.repository.BoardRepository;
 import pl.trello.service.BoardService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("boards")
 public class BoardRestController {
 
-    private BoardRepository boardRepository;
     private BoardService boardService;
 
-    public BoardRestController(BoardRepository boardRepository, BoardService boardService) {
-        this.boardRepository = boardRepository;
+    public BoardRestController(BoardService boardService) {
         this.boardService = boardService;
     }
 
     @GetMapping
     public List<Board> getAll(@AuthenticationPrincipal User user) {
-        return boardRepository.findAllByUserIdOrderByOrder(user.getId()).stream()
-                .peek(board -> board.setCardLists(null))
-                .collect(Collectors.toList());
+        return boardService.getAll(user.getId());
     }
 
     @GetMapping("{id}")
     public Board getById(@PathVariable String id) throws NotFoundException {
-        return boardRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Board with ID '" + id + "' not found"));
+        return boardService.getById(id);
     }
 
     @PostMapping
@@ -44,11 +37,7 @@ public class BoardRestController {
 
     @PutMapping("{id}")
     public Board update(@PathVariable String id, @RequestBody Board board) throws NotFoundException {
-        if (boardRepository.existsById(id)) {
-            board.setId(id);
-            return boardRepository.save(board);
-        }
-        throw new NotFoundException("Board with ID '" + board.getId() + "' not found");
+        return boardService.update(id, board);
     }
 
     @PutMapping("move")
@@ -58,6 +47,6 @@ public class BoardRestController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable String id) {
-        boardRepository.deleteById(id);
+        boardService.delete(id);
     }
 }
