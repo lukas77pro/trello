@@ -6,9 +6,10 @@ import { switchMap } from 'rxjs/operators';
 import { BoardService } from '../../service/board.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CardListService } from '../../service/cardlist.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { CardList } from 'src/model/card-list';
 import { Card } from 'src/model/card';
+import { CardService } from 'src/service/card.service';
 
 @Component({
   selector: 'app-board',
@@ -17,10 +18,11 @@ import { Card } from 'src/model/card';
 })
 export class BoardComponent implements OnInit {
   board$: Observable<Board>;
-  cardListName = new FormControl('', Validators.required);
+  cardListTitle = new FormControl('', Validators.required);
 
   constructor(private boardService: BoardService,
               private cardListService: CardListService,
+              private cardService: CardService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -31,15 +33,17 @@ export class BoardComponent implements OnInit {
   }
 
   createCardList(board: Board): void {
-    if (this.cardListName.valid) {
+    if (this.cardListTitle.valid) {
       this.cardListService
-        .create(this.cardListName.value, board.id)
+        .create(this.cardListTitle.value, board.id)
         .subscribe(cardList => board.cardLists.push(cardList));
     }
   }
 
-  onCardDropped(event: CdkDragDrop<Card[]>) {
-    console.log(event);
+  createCard(board: Board, cardList: CardList) {
+    this.cardService
+      .create(Math.random().toString(36).substr(2, 6), board.id, cardList.title)
+      .subscribe(card => cardList.cards.push(card));
   }
 
   onCardListDropped(board: Board, event: CdkDragDrop<CardList[]>) {
@@ -47,7 +51,13 @@ export class BoardComponent implements OnInit {
     this.cardListService.move(event.previousIndex, event.currentIndex, board.id).subscribe();
   }
 
-  getConnectedList(board: Board): any[] {
-    return board.cardLists.map(cardList => cardList.name);
+  onCardDropped(board: Board, event: CdkDragDrop<Card[]>) {
+    transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    this.cardService.move(event.previousContainer.id, event.previousIndex, event.container.id, event.currentIndex, board.id).subscribe();
   }
+
+  getConnectedList(board: Board): any[] {
+    return board.cardLists.map(cardList => cardList.title);
+  }
+
 }

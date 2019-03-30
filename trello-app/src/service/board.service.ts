@@ -21,8 +21,8 @@ export class BoardService {
     return this.httpClient.get<Board>(`${this.BASE_URL}/boards/${id}`, { headers: this.authService.getAuthHeader() });
   }
 
-  create(boardName: string): Observable<Board> {
-    return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, boardName, { headers: this.authService.getAuthHeader() });
+  create(title: string): Observable<Board> {
+    return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, title, { headers: this.authService.getAuthHeader() });
   }
 
   delete(id: String): Observable<{}> {

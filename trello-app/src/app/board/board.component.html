@@ -1,23 +1,23 @@
 <div *ngIf="board$ | async as board">          
-    <div class="cardlist-container" cdkDropList [cdkDropListData]="board.cardLists" (cdkDropListDropped)="onCardListDropped($event)" cdkDropListOrientation="horizontal">
+    <div class="cardlist-container" cdkDropList [cdkDropListData]="board.cardLists" (cdkDropListDropped)="onCardListDropped(board, $event)" cdkDropListOrientation="horizontal">
         <div cdkDropListGroup *ngFor="let cardList of board.cardLists" cdkDrag [cdkDragData]="cardList">
             <mat-card class="cardlist-item">
-                <mat-card-title class="cardlist-title" cdkDragHandle>{{cardList.name}}</mat-card-title>
+                <mat-card-title class="cardlist-title" cdkDragHandle>{{cardList.title}}</mat-card-title>
                 <mat-card-content>
-                    <div cdkDropList id={{cardList.name}} [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped($event)" [cdkDropListConnectedTo]="getConnectedList(board)">
+                    <div cdkDropList id={{cardList.title}} [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped(board, $event)" [cdkDropListConnectedTo]="getConnectedList(board)">
                         <div *ngFor="let card of cardList.cards" cdkDrag [cdkDragData]="card">
-                            <mat-card class="card-item">{{card.content}}</mat-card>
+                            <mat-card class="card-item">{{card.order}} {{card.title}}</mat-card>
                         </div>                        
                     </div>
                 </mat-card-content>    
-                <mat-card-actions>
-                    Dodaj nową kartę...
+                <mat-card-actions>                    
+                    <button (click)="createCard(board, cardList)">Dodaj nową kartę...</button>
                 </mat-card-actions>         
             </mat-card>            
         </div>
         <div>
             <mat-form-field style="margin-right: 4px">
-                <input matNativeControl placeholder="Add new card list" [formControl]="cardListName">
+                <input matNativeControl placeholder="Add new card list" [formControl]="cardListTitle">
             </mat-form-field>
             <button mat-flat-button color="primary" (click)="createCardList(board)">Create</button>
         </div>

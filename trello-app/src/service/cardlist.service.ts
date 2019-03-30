@@ -13,8 +13,8 @@ export class CardListService {
   constructor(private httpClient: HttpClient, private authService: AuthService) {
   }
 
-  create(name: string, boardId: string): Observable<CardList> {
-    return this.httpClient.post<CardList>(`${this.BASE_URL}/boards/${boardId}/cardlists`, name, {
+  create(title: string, boardId: string): Observable<CardList> {
+    return this.httpClient.post<CardList>(`${this.BASE_URL}/boards/${boardId}/cardlists`, title, {
       headers: this.authService.getAuthHeader()
     });
   }

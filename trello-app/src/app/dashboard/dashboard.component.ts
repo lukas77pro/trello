@@ -5,7 +5,7 @@ import { BoardService } from '../../service/board.service';
 import { EventService } from '../../event/event.service';
 import { BoardCreatedEvent, BoardDeletedEvent } from '../../event/events';
 import { CdkDragDrop } from '@angular/cdk/drag-drop/typings/drag-events';
-import { CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +13,7 @@ import { CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  boardName = new FormControl('');
+  boardTitle = new FormControl('');
   boards: Board[];
 
   constructor(private boardService: BoardService, private eventService: EventService) {
@@ -21,7 +21,7 @@ export class DashboardComponent {
   }
 
   createBoard() {
-    this.boardService.create(this.boardName.value).subscribe(board => {
+    this.boardService.create(this.boardTitle.value).subscribe(board => {
       this.boards.push(board);
       this.eventService.push(new BoardCreatedEvent(board));
     });
@@ -34,7 +34,7 @@ export class DashboardComponent {
     });
   }
 
-  boardDropped(event: CdkDragDrop<Board[]>) {
+  onBoardDropped(event: CdkDragDrop<Board[]>) {
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
     this.boardService.move(event.previousIndex, event.currentIndex).subscribe();
   }
