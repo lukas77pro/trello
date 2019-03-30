@@ -17,7 +17,7 @@ public class CardList implements Serializable, Ordered{
 
     private static final long serialVersionUID = 6726852648003272766L;
 
-    private String name;
+    private String title;
 
     private List<Card> cards;
 

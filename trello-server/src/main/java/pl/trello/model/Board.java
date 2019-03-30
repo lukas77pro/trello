@@ -20,7 +20,7 @@ public class Board implements Serializable, Ordered {
     @Id
     private String id;
 
-    private String name;
+    private String title;
 
     private List<CardList> cardLists;
 

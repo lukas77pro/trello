@@ -31,8 +31,8 @@ public class BoardRestController {
     }
 
     @PostMapping
-    public Board create(@RequestBody String name, @AuthenticationPrincipal User user) throws AlreadyExistsException {
-        return boardService.create(name, user.getId());
+    public Board create(@RequestBody String title, @AuthenticationPrincipal User user) throws AlreadyExistsException {
+        return boardService.create(title, user.getId());
     }
 
     @PutMapping("{id}")
