@@ -46,7 +46,7 @@ public class BoardRestController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        boardService.delete(id);
+    public void delete(@PathVariable String id, @AuthenticationPrincipal User user) {
+        boardService.delete(id, user.getId());
     }
 }

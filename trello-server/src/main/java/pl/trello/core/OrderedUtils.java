@@ -18,7 +18,7 @@ public class OrderedUtils {
         reorder(target);
     }
 
-    private static <T extends Ordered> List<T> reorder(List<T> items) {
+    public static <T extends Ordered> List<T> reorder(List<T> items) {
         IntStream.range(0, items.size()).forEach(index -> items.get(index).setOrder(index));
         return items;
     }

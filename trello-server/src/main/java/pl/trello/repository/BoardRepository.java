@@ -7,7 +7,11 @@ import java.util.List;
 
 public interface BoardRepository extends MongoRepository<Board, String> {
 
-    boolean existsByTitle(String title);
+    boolean existsByTitleAndUserId(String title, String userId);
+
+    long countByUserId(String userId);
 
     List<Board> findAllByUserIdOrderByOrder(String userId);
+
+    List<Board> findAllByUserId(String userId);
 }

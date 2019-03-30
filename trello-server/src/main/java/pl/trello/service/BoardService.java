@@ -21,11 +21,11 @@ public class BoardService {
     }
 
     public Board create(String title, String userId) throws AlreadyExistsException {
-        if (boardRepository.existsByTitle(title)) {
+        if (boardRepository.existsByTitleAndUserId(title, userId)) {
             throw new AlreadyExistsException("Board with '" + title + "' already exists");
         }
         return boardRepository.save(Board.builder()
-                .title(title).userId(userId).cardLists(new ArrayList<>()).order(boardRepository.count()).build());
+                .title(title).userId(userId).cardLists(new ArrayList<>()).order(boardRepository.countByUserId(userId)).build());
     }
 
     public void move(int previousIndex, int currentIndex, String userId) {
@@ -62,7 +62,12 @@ public class BoardService {
         throw new NotFoundException("Board with ID '" + board.getId() + "' not found");
     }
 
-    public void delete(String id) {
+    public void delete(String id, String userId) {
         boardRepository.deleteById(id);
+        reorder(userId);
+    }
+
+    private void reorder(String userId) {
+        boardRepository.saveAll(OrderedUtils.reorder(boardRepository.findAllByUserId(userId)));
     }
 }
