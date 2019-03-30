@@ -1,11 +1,16 @@
-.cardlist-container {
+.cardlist-container{
     display: flex;
+}
+
+.new-card-container {
+    display: flex;
+    height: auto;
 }
 
 .cardlist-item {
     width: 240px;
     margin-right: 8px; 
-    background: darken($color: #ffffff, $amount: 3%);
+    background: darken($color: #ffffff, $amount: 8%);
     
     .cardlist-title {
         cursor: grab;

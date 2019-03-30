@@ -18,7 +18,8 @@ import { CardService } from 'src/service/card.service';
 })
 export class BoardComponent implements OnInit {
   board$: Observable<Board>;
-  cardListTitle = new FormControl('', Validators.required);
+  cardListTitle = new FormControl('');
+  cardTitle = new FormControl('');
 
   constructor(private boardService: BoardService,
               private cardListService: CardListService,
@@ -36,14 +37,20 @@ export class BoardComponent implements OnInit {
     if (this.cardListTitle.valid) {
       this.cardListService
         .create(this.cardListTitle.value, board.id)
-        .subscribe(cardList => board.cardLists.push(cardList));
+        .subscribe(cardList => {
+          board.cardLists.push(cardList);
+          this.cardListTitle.setValue('');
+        });
     }
   }
 
   createCard(board: Board, cardList: CardList) {
     this.cardService
-      .create(Math.random().toString(36).substr(2, 6), board.id, cardList.title)
-      .subscribe(card => cardList.cards.push(card));
+      .create(this.cardTitle.value, board.id, cardList.title)
+      .subscribe(card => {
+        cardList.cards.push(card);
+        this.cardTitle.setValue('');
+      });
   }
 
   onCardListDropped(board: Board, event: CdkDragDrop<CardList[]>) {
@@ -59,5 +66,4 @@ export class BoardComponent implements OnInit {
   getConnectedList(board: Board): any[] {
     return board.cardLists.map(cardList => cardList.title);
   }
-
 }

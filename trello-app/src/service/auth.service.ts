@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { EventService} from 'src/event/event.service';
 import { UserLoggedOut, UserLoggedIn } from 'src/event/events';
 import { User } from 'src/model/user';
@@ -15,7 +15,6 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient,
               private eventService: EventService) {
-
   }
 
   loadUser(): void {
@@ -47,5 +46,9 @@ export class AuthService {
     return this.user ? new HttpHeaders({
       'Authorization': `Basic ${btoa(`${this.user.username}:${this.user.password}`)}`
     }) : null;
+  }
+
+  isLoggedIn(): boolean {
+    return this.user != null;
   }
 }

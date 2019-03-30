@@ -1,16 +1,24 @@
-<h2>My boards</h2>
-<div class="board-container" cdkDropListOrientation="horizontal" cdkDropListLockAxis="x" (cdkDropListDropped)="onBoardDropped($event)" cdkDropList>
-  <div class="board-item" *ngFor="let board of boards" cdkDrag [routerLink]="['/board', board.id]">
-    <mat-card>
-      <mat-card-header>
-          <mat-card-title>{{ board.title }}</mat-card-title>
-      </mat-card-header>
-    </mat-card>  
-  </div>  
-  <div>
-    <mat-form-field style="margin-right: 4px">
-      <input matNativeControl placeholder="Add new board" [formControl]="boardTitle">
-    </mat-form-field>
-    <button mat-flat-button color="primary" (click)="createBoard()">Create</button>
+<div class="dashboard">
+  <h2>Moje tablice</h2>
+  <div class="board-container" cdkDropListOrientation="horizontal" cdkDropListLockAxis="x" (cdkDropListDropped)="onBoardDropped($event)" cdkDropList>
+    <div class="board-item" *ngFor="let board of boards" cdkDrag [routerLink]="['/board', board.id]">
+      <mat-card>        
+        <h2>{{ board.title }}</h2>
+        <div>
+            <button mat-icon-button (click)="$event.stopPropagation()" [matMenuTriggerFor]="boardMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #boardMenu="matMenu">
+              <button mat-menu-item (click)="deleteBoard(board.id)">Usuń</button>
+            </mat-menu>
+        </div>  
+      </mat-card>  
+    </div>  
+    <div>
+      <mat-form-field style="margin-right: 4px">
+        <input matNativeControl placeholder="Nowa tablica" [formControl]="boardTitle">
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="createBoard()">Dodaj</button>
+    </div>
   </div>
 </div>

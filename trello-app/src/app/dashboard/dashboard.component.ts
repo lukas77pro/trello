@@ -23,6 +23,7 @@ export class DashboardComponent {
   createBoard() {
     this.boardService.create(this.boardTitle.value).subscribe(board => {
       this.boards.push(board);
+      this.boardTitle.setValue('');
       this.eventService.push(new BoardCreatedEvent(board));
     });
   }

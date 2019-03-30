@@ -6,20 +6,27 @@
                 <mat-card-content>
                     <div cdkDropList id={{cardList.title}} [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped(board, $event)" [cdkDropListConnectedTo]="getConnectedList(board)">
                         <div *ngFor="let card of cardList.cards" cdkDrag [cdkDragData]="card">
-                            <mat-card class="card-item">{{card.order}} {{card.title}}</mat-card>
+                            <mat-card class="card-item">
+                                <mat-card-content>{{card.title}}</mat-card-content>
+                            </mat-card>
                         </div>                        
                     </div>
                 </mat-card-content>    
-                <mat-card-actions>                    
-                    <button (click)="createCard(board, cardList)">Dodaj nową kartę...</button>
+                <mat-card-actions>   
+                    <div>
+                        <mat-form-field style="margin-right: 4px">
+                            <input matNativeControl placeholder="Nowa karta" [formControl]="cardTitle">
+                        </mat-form-field>        
+                        <button mat-flat-button color="primary" (click)="createCard(board, cardList)">Dodaj</button>  
+                    </div>    
                 </mat-card-actions>         
             </mat-card>            
         </div>
         <div>
             <mat-form-field style="margin-right: 4px">
-                <input matNativeControl placeholder="Add new card list" [formControl]="cardListTitle">
+                <input matNativeControl placeholder="Nowa lista" [formControl]="cardListTitle">
             </mat-form-field>
-            <button mat-flat-button color="primary" (click)="createCardList(board)">Create</button>
+            <button mat-flat-button color="primary" (click)="createCardList(board)">Dodaj</button>
         </div>
     </div>
 </div>     
