@@ -1,5 +1,6 @@
 package pl.trello.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.trello.core.NotFoundException;
 import pl.trello.core.OrderedUtils;
@@ -13,11 +14,8 @@ import java.util.stream.Collectors;
 @Service
 public class CardListService {
 
+    @Autowired
     private BoardService boardService;
-
-    public CardListService(BoardService boardService) {
-        this.boardService = boardService;
-    }
 
     public CardList create(String boardId, String title) throws NotFoundException {
         Board board = boardService.getById(boardId);

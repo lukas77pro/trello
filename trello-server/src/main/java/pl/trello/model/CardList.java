@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.trello.core.Ordered;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +21,7 @@ public class CardList implements Serializable, Ordered{
 
     private String title;
 
+    @DBRef
     private List<Card> cards;
 
     private long order;

@@ -1,31 +1,29 @@
 package pl.trello.rest;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
 import pl.trello.model.Board;
 import pl.trello.model.User;
 import pl.trello.service.BoardService;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("boards")
+@RequestMapping("/boards")
 public class BoardRestController {
 
-    private BoardService boardService;
 
-    public BoardRestController(BoardService boardService) {
-        this.boardService = boardService;
-    }
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping
     public List<Board> getAll(@AuthenticationPrincipal User user) {
         return boardService.getAll(user.getId());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Board getById(@PathVariable String id) throws NotFoundException {
         return boardService.getById(id);
     }
@@ -35,7 +33,8 @@ public class BoardRestController {
         return boardService.create(title, user.getId());
     }
 
-    @PutMapping("{id}")
+
+    @PutMapping("/{id}")
     public Board update(@PathVariable String id, @RequestBody Board board) throws NotFoundException {
         return boardService.update(id, board);
     }
