@@ -4,7 +4,7 @@
             <mat-card class="cardlist-item">
                 <mat-card-title class="cardlist-title" cdkDragHandle>{{cardList.title}}</mat-card-title>
                 <mat-card-content>
-                    <div cdkDropList id={{cardList.title}} [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped(board, $event)" [cdkDropListConnectedTo]="getConnectedList(board)">
+                    <div cdkDropList id={{cardList.id}} [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped(board, $event)" [cdkDropListConnectedTo]="getConnectedList(board)">
                         <div *ngFor="let card of cardList.cards" cdkDrag [cdkDragData]="card">
                             <mat-card class="card-item">
                                 <mat-card-content>{{card.title}}</mat-card-content>

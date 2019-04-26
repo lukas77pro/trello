@@ -46,7 +46,7 @@ export class BoardComponent implements OnInit {
 
   createCard(board: Board, cardList: CardList) {
     this.cardService
-      .create(this.cardTitle.value, board.id, cardList.title)
+      .create(this.cardTitle.value, board.id, cardList.id)
       .subscribe(card => {
         cardList.cards.push(card);
         this.cardTitle.setValue('');
@@ -64,6 +64,6 @@ export class BoardComponent implements OnInit {
   }
 
   getConnectedList(board: Board): any[] {
-    return board.cardLists.map(cardList => cardList.title);
+    return board.cardLists.map(cardList => cardList.id);
   }
 }
