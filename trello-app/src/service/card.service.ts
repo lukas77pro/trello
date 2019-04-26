@@ -13,19 +13,19 @@ export class CardService {
   constructor(private httpClient: HttpClient, private authService: AuthService) {
   }
 
-  create(title: string, boardId: string, cardListTitle: string): Observable<Card> {
-    return this.httpClient.post<Card>(`${this.BASE_URL}/boards/${boardId}/cardlists/${cardListTitle}/cards`, title, {
+  create(title: string, boardId: string, cardListId: string): Observable<Card> {
+    return this.httpClient.post<Card>(`${this.BASE_URL}/boards/${boardId}/cardlists/${cardListId}/cards`, title, {
       headers: this.authService.getAuthHeader()
     });
   }
 
-  move(sourceCardListTitle: string, previousIndex: number,
-       targetCardListTitle: string, currentIndex: number, boardId: string): Observable<{}> {
+  move(sourceCardListId: string, previousIndex: number,
+       targetCardListId: string, currentIndex: number, boardId: string): Observable<{}> {
     return this.httpClient
-        .put(`${this.BASE_URL}/boards/${boardId}/cardlists/${sourceCardListTitle}/cards/move`, {}, {
+        .put(`${this.BASE_URL}/boards/${boardId}/cardlists/${sourceCardListId}/cards/move`, {}, {
       headers: this.authService.getAuthHeader(),
       params: new HttpParams()
-        .append('targetCardListTitle', targetCardListTitle)
+        .append('targetCardListId', targetCardListId)
         .append('previousIndex', previousIndex.toString())
         .append('currentIndex', currentIndex.toString())
     });

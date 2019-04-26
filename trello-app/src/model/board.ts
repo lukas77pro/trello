@@ -1,7 +1,7 @@
 import { CardList } from './card-list';
 
 export interface Board {
-    id?: string;
+    id: string;
     title: string;
     cardLists: CardList[];
     order: number;
