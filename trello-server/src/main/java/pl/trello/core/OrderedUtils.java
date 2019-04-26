@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class OrderedUtils {
+    private OrderedUtils() {
+    }
 
     public static <T extends Ordered> List<T> move(List<T> items, int previousIndex, int currentIndex) {
         T item = items.remove(previousIndex);

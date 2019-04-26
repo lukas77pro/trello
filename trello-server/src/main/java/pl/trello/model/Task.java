@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class Task {
 
     private String task;
-    private Boolean done;
+
+    private boolean done;
 }

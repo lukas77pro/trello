@@ -24,6 +24,13 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public User getById(String userId) throws NotFoundException {
+        return userRepository.findById(userId).map(user -> {
+            user.setPassword(null);
+            return user;
+        }).orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
     public void create(User user) throws AlreadyExistsException, NotFoundException {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new AlreadyExistsException("User with username '" + user.getUsername() + "' already exists");

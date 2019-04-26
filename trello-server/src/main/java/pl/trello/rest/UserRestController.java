@@ -22,6 +22,11 @@ public class UserRestController {
         userService.create(user);
     }
 
+    @GetMapping("{id}")
+    public User getById(@PathVariable String id) throws NotFoundException {
+        return userService.getById(id);
+    }
+
     @GetMapping
     public User login(@AuthenticationPrincipal User user) {
         return user;

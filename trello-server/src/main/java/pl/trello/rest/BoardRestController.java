@@ -11,7 +11,7 @@ import pl.trello.service.BoardService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/boards")
+@RequestMapping("boards")
 public class BoardRestController {
 
 
@@ -23,7 +23,7 @@ public class BoardRestController {
         return boardService.getAll(user.getId());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Board getById(@PathVariable String id) throws NotFoundException {
         return boardService.getById(id);
     }
@@ -34,7 +34,7 @@ public class BoardRestController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public Board update(@PathVariable String id, @RequestBody Board board) throws NotFoundException {
         return boardService.update(id, board);
     }

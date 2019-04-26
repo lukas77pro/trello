@@ -1,6 +1,5 @@
 package pl.trello.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
@@ -14,8 +13,11 @@ import java.util.stream.Collectors;
 @Service
 public class BoardService {
 
-    @Autowired
     private BoardRepository boardRepository;
+
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
 
     public Board create(String title, String userId) throws AlreadyExistsException {
         if (boardRepository.existsByTitleAndUserId(title, userId)) {
