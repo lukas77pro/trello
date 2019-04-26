@@ -4,6 +4,7 @@ spring:
   data:
     mongodb:
       database: ${spring.application.name}
+      host: mongo
   security:
     user:
       name: ${spring.application.name}
