@@ -6,7 +6,7 @@
                 <mat-card-content>
                     <div cdkDropList id={{cardList.id}} [cdkDropListData]="cardList.cards" (cdkDropListDropped)="onCardDropped(board, $event)" [cdkDropListConnectedTo]="getConnectedList(board)">
                         <div *ngFor="let card of cardList.cards" cdkDrag [cdkDragData]="card">
-                            <mat-card class="card-item">
+                            <mat-card class="card-item" (click)="openCardDialog(board.id, cardList.id, card)">
                                 <mat-card-content>{{card.title}}</mat-card-content>
                             </mat-card>
                         </div>                        

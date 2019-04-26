@@ -45,6 +45,7 @@ import {
 } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { SignupComponent } from './signup/signup.component';
     DashboardComponent,
     NavbarComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -94,6 +96,9 @@ import { SignupComponent } from './signup/signup.component';
     MatSortModule,
     MatPaginatorModule,
     DragDropModule
+  ],
+  entryComponents: [
+    CardComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

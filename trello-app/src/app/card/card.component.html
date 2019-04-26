@@ -1,0 +1,70 @@
+<div mat-dialog-title>
+  {{ data.card.title }}
+</div>
+<div class="container">
+  <div class="content">
+    <div class="section">
+        <div class="section-title">Opis</div>
+        <div class="description">
+          <div *ngIf="!descriptionEdition">
+            {{ data.card.description ? data.card.description : '(brak opisu)' }}
+          </div>
+          <mat-form-field *ngIf="descriptionEdition" class="full-width" appearance="outline">
+            <mat-label>{{ data.card.description ? 'Edytuj ' : 'Dodaj ' }}opis</mat-label>
+            <textarea matInput placeholder="Treść" [formControl]="description"></textarea>
+          </mat-form-field>
+          <div class="description-btn-area">              
+            <button *ngIf="!descriptionEdition" mat-flat-button color="primary" (click)="editDescription()">
+              {{ data.card.description ? 'Edytuj ' : 'Dodaj ' }}opis
+            </button>
+            <button *ngIf="descriptionEdition" mat-flat-button color="primary" (click)="saveDescription()">
+              Zapisz
+            </button>
+            <button *ngIf="descriptionEdition" mat-flat-button color="accent" (click)="cancelDescriptionEditing()">
+              Anuluj
+            </button>    
+          </div>          
+        </div>
+    </div>
+    <div class="section" *ngFor="let checklist of data.card.checklists">
+        <div class="section-title">List zadań</div>
+    </div>
+    <div class="section">
+        <div class="section-title">Komentarze</div>
+        <mat-form-field class="full-width" appearance="outline" >
+          <mat-label>Dodaj komentarz</mat-label>
+          <textarea matInput placeholder="Treść" [formControl]="comment"></textarea>
+        </mat-form-field>
+        <div *ngIf="comment.value" class="comment-btn-area">
+          <button mat-flat-button color="primary" (click)="addComment()">Dodaj</button>
+          <button mat-flat-button color="accent" (click)="cancelComment()">Anuluj</button>
+        </div>        
+        <div class="comment-btn-area">
+            <button mat-flat-button color="primary" (click)="toggleComments()">
+              {{ commentsVisible ? 'Ukryj' : 'Pokaż' }} komentarze</button>
+          </div>
+        <div *ngIf="commentsVisible">
+          <div class="comment-list" *ngIf="!data.card.comments.length">
+            Brak komentarzy
+          </div>
+          <div *ngFor="let comment of data.card.comments.reverse()">
+            <div *ngIf="getAuthor(comment.authorId) as user">
+              <div>{{ getCommentDate(comment) }}<b>{{ user.username }}</b> napisał(a):</div> 
+            </div>
+            <div class="comment-content">
+              {{ comment.content }}
+            </div>
+          </div>
+        </div>
+        
+    </div>
+  </div>
+  <div class="right-side-bar">
+    <div class="section">
+      <div class="section-title">Dodaj do karty</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Działania</div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { CardList } from 'src/model/card-list';
 import { Card } from 'src/model/card';
 import { CardService } from 'src/service/card.service';
+import { MatDialog } from '@angular/material';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-board',
@@ -24,7 +26,8 @@ export class BoardComponent implements OnInit {
   constructor(private boardService: BoardService,
               private cardListService: CardListService,
               private cardService: CardService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private matDialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -66,4 +69,21 @@ export class BoardComponent implements OnInit {
   getConnectedList(board: Board): any[] {
     return board.cardLists.map(cardList => cardList.id);
   }
+
+  openCardDialog(boardId: string, cardListId: string, card: Card) {
+    this.matDialog.open(CardComponent, {
+      width: '640px',
+      data: {
+        boardId: boardId,
+        cardListId: cardListId,
+        card: card
+      }
+    });
+  }
+}
+
+export interface CardData {
+  boardId: string;
+  cardListId: string;
+  card: Card;
 }

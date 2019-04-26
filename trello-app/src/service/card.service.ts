@@ -19,6 +19,12 @@ export class CardService {
     });
   }
 
+  update(boardId: string, cardListId: string, cardId: string, card: Card): Observable<Card> {
+    return this.httpClient.put<Card>(`${this.BASE_URL}/boards/${boardId}/cardlists/${cardListId}/cards/${cardId}`, card, {
+      headers: this.authService.getAuthHeader()
+    });
+  }
+
   move(sourceCardListId: string, previousIndex: number,
        targetCardListId: string, currentIndex: number, boardId: string): Observable<{}> {
     return this.httpClient
