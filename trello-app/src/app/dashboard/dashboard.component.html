@@ -1,24 +1,39 @@
 <div class="dashboard">
-  <h2>Moje tablice</h2>
-  <div class="board-container" cdkDropListOrientation="horizontal" cdkDropListLockAxis="x" (cdkDropListDropped)="onBoardDropped($event)" cdkDropList>
-    <div class="board-item" *ngFor="let board of boards" cdkDrag [routerLink]="['/board', board.id]">
-      <mat-card>        
-        <h2>{{ board.title }}</h2>
-        <div>
-            <button mat-icon-button (click)="$event.stopPropagation()" [matMenuTriggerFor]="boardMenu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #boardMenu="matMenu">
-              <button mat-menu-item (click)="deleteBoard(board.id)">Usuń</button>
-            </mat-menu>
-        </div>  
-      </mat-card>  
-    </div>  
-    <div>
-      <mat-form-field style="margin-right: 4px">
-        <input matNativeControl placeholder="Nowa tablica" [formControl]="boardTitle">
-      </mat-form-field>
-      <button mat-flat-button color="primary" (click)="createBoard()">Dodaj</button>
-    </div>
+  <div class="teams">
+    <h2>Zespoły</h2>
+    <button *ngFor="let team of teams" class="team-button" mat-button color="secondary" [routerLink]="['/team', team.id]">
+      <mat-icon class="button-icon">people</mat-icon>{{ team.name }}
+    </button>
+    <button mat-button color="secondary"  class="team-button" (click)="openCreateTeamDialog()">
+      <mat-icon class="button-icon">add</mat-icon>Utwórz zespół
+    </button>
   </div>
+  <div class="boards">
+    <h2>Moje tablice</h2>
+    <div class="boards-container" cdkDropListOrientation="horizontal" cdkDropListLockAxis="x" (cdkDropListDropped)="onBoardDropped($event)" cdkDropList>
+      <div class="board-item" *ngFor="let board of boards" cdkDrag [routerLink]="['/board', board.id]">
+        <mat-card class="board-card">        
+          <h2>{{ board.title }}</h2>
+          <div>
+              <button mat-icon-button (click)="$event.stopPropagation()" [matMenuTriggerFor]="boardMenu">
+                  <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #boardMenu="matMenu">
+                <button mat-menu-item (click)="deleteBoard(board.id)">Usuń</button>
+              </mat-menu>
+          </div>  
+        </mat-card>  
+      </div>  
+      <div>
+        <mat-card class="add-board-card">   
+          <mat-form-field>
+            <input matInput placeholder="Nowa tablica" [formControl]="boardTitle">
+          </mat-form-field>
+          <button mat-flat-button color="primary" (click)="createBoard()">
+            <mat-icon>add</mat-icon>Dodaj tablicę 
+          </button>
+        </mat-card>
+      </div>
+    </div>
+  </div>  
 </div>

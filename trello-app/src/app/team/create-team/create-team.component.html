@@ -1,0 +1,13 @@
+<div class="dialog-header" mat-dialog-title>
+  <div>
+    Utwórz zespół
+  </div>
+  <button mat-icon-button matDialogClose>
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+<mat-form-field appearance="outline">
+  <mat-label>Nazwa</mat-label>
+  <input matInput placeholder="Zespół" [formControl]="teamName" cdkFocusInitial>
+</mat-form-field>  
+<button [disabled]="!teamName.valid" mat-raised-button color="primary" (click)="addTeam()">Utwórz</button>

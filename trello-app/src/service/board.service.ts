@@ -14,19 +14,27 @@ export class BoardService {
               private authService: AuthService) { }
 
   getAll(): Observable<Board[]> {
-    return this.httpClient.get<Board[]>(`${this.BASE_URL}/boards`, { headers: this.authService.getAuthHeader() });
+    return this.httpClient.get<Board[]>(`${this.BASE_URL}/boards`, {
+      headers: this.authService.getAuthHeader()
+    });
   }
 
   get(id: String): Observable<Board> {
-    return this.httpClient.get<Board>(`${this.BASE_URL}/boards/${id}`, { headers: this.authService.getAuthHeader() });
+    return this.httpClient.get<Board>(`${this.BASE_URL}/boards/${id}`, {
+      headers: this.authService.getAuthHeader()
+    });
   }
 
   create(title: string): Observable<Board> {
-    return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, title, { headers: this.authService.getAuthHeader() });
+    return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, title, {
+      headers: this.authService.getAuthHeader()
+    });
   }
 
   delete(id: String): Observable<{}> {
-    return this.httpClient.delete(`${this.BASE_URL}/boards/${id}`, { headers: this.authService.getAuthHeader() });
+    return this.httpClient.delete(`${this.BASE_URL}/boards/${id}`, {
+      headers: this.authService.getAuthHeader()
+    });
   }
 
   move(previousIndex: number, currentIndex: number): Observable<{}> {

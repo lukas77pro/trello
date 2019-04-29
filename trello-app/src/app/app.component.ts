@@ -1,7 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EventService } from '../event/event.service';
-import { Subscriber } from '../event/subscriber';
-import { Events, EventType, BoardCreatedEvent, BoardDeletedEvent } from '../event/events';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
 
 @Component({

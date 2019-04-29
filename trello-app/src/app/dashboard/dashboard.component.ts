@@ -6,6 +6,11 @@ import { EventService } from '../../event/event.service';
 import { BoardCreatedEvent, BoardDeletedEvent } from '../../event/events';
 import { CdkDragDrop } from '@angular/cdk/drag-drop/typings/drag-events';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { Team } from 'src/model/team';
+import { TeamService } from 'src/service/team.service';
+import { MatDialog } from '@angular/material';
+import { CreateTeamComponent } from '../team/create-team/create-team.component';
+import { take, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +19,15 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class DashboardComponent {
   boardTitle = new FormControl('');
+  teams: Team[];
   boards: Board[];
 
-  constructor(private boardService: BoardService, private eventService: EventService) {
+  constructor(private boardService: BoardService,
+              private teamService: TeamService,
+              private eventService: EventService,
+              private matDialog: MatDialog) {
     boardService.getAll().subscribe(boards => this.boards = boards);
+    teamService.getAll().subscribe(teams => this.teams = teams);
   }
 
   createBoard() {
@@ -38,5 +48,11 @@ export class DashboardComponent {
   onBoardDropped(event: CdkDragDrop<Board[]>) {
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
     this.boardService.move(event.previousIndex, event.currentIndex).subscribe();
+  }
+
+  openCreateTeamDialog() {
+    this.matDialog.open(CreateTeamComponent).afterClosed().pipe(
+        filter(team => team)
+      ).subscribe((team: Team) => this.teams.push(team));
   }
 }

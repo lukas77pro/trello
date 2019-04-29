@@ -1,8 +1,28 @@
 .dashboard {
-    margin: 0 20%;
+    margin: 16px 20% 0;
+    display: flex;
+
+    .teams {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+
+        .team-button {
+            text-align: start;
+        }
+    }
 }
 
-.board-container {
+.full-width {
+    width: 100%;
+}
+
+.button-icon {
+    margin-right: 4px;
+    margin-bottom: 4px;
+} 
+
+.boards-container {
     display: flex;
     flex-direction: row;
 
@@ -13,15 +33,19 @@
     }
 }
 
-h2 {
-    margin-top: 16px;
-}
-
-mat-card {
+.board-card {
     display: flex;
     justify-content: space-between;
-    width: 200px;
+    width: 160px;
     height: 100px;
+}
+
+.add-board-card {
+    border: 1px dashed lightgray;
+    width: 160px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
 }
 
 .cdk-drag-placeholder {

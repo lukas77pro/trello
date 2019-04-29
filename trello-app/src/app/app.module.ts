@@ -46,6 +46,8 @@ import {
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { CardComponent } from './card/card.component';
+import { TeamComponent } from './team/team.component';
+import { CreateTeamComponent } from './team/create-team/create-team.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { CardComponent } from './card/card.component';
     NavbarComponent,
     LoginComponent,
     SignupComponent,
-    CardComponent
+    CardComponent,
+    TeamComponent,
+    CreateTeamComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +102,8 @@ import { CardComponent } from './card/card.component';
     DragDropModule
   ],
   entryComponents: [
-    CardComponent
+    CardComponent,
+    CreateTeamComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

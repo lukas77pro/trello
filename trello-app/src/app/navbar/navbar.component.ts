@@ -11,25 +11,16 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnDestroy, Subscriber {
-  user: User;
+export class NavbarComponent {
 
-  constructor(private eventService: EventService,
-              private authService: AuthService,
-              private router: Router) {
-    this.eventService.subscribe(this, EventType.UserLoggedIn, EventType.UserLoggedOut);
+  constructor(private authService: AuthService) {
   }
 
-  ngOnDestroy(): void {
-    this.eventService.unsubscribe(this);
-  }
-
-  onEventReceived(event: Events): void {
-    this.user = event instanceof UserLoggedIn ? event.payload : null;
+  getUser() {
+    return this.authService.user;
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }
