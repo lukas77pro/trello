@@ -48,6 +48,7 @@ import { SignupComponent } from './signup/signup.component';
 import { CardComponent } from './card/card.component';
 import { TeamComponent } from './team/team.component';
 import { CreateTeamComponent } from './team/create-team/create-team.component';
+import { BoardListComponent } from './board-list/board-list.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CreateTeamComponent } from './team/create-team/create-team.component';
     SignupComponent,
     CardComponent,
     TeamComponent,
-    CreateTeamComponent
+    CreateTeamComponent,
+    BoardListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Board } from '../model/board';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -13,9 +13,10 @@ export class BoardService {
   constructor(private httpClient: HttpClient,
               private authService: AuthService) { }
 
-  getAll(): Observable<Board[]> {
+  getAll(teamId: string): Observable<Board[]> {
     return this.httpClient.get<Board[]>(`${this.BASE_URL}/boards`, {
-      headers: this.authService.getAuthHeader()
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams().append('teamId', teamId)
     });
   }
 
@@ -25,9 +26,10 @@ export class BoardService {
     });
   }
 
-  create(title: string): Observable<Board> {
+  create(title: string, teamId: string): Observable<Board> {
     return this.httpClient.post<Board>(`${this.BASE_URL}/boards`, title, {
-      headers: this.authService.getAuthHeader()
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams().append('teamId', teamId)
     });
   }
 
