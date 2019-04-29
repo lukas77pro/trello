@@ -14,13 +14,12 @@ import java.util.List;
 @RequestMapping("boards")
 public class BoardRestController {
 
-
     @Autowired
     private BoardService boardService;
 
     @GetMapping
-    public List<Board> getAll(@AuthenticationPrincipal User user) {
-        return boardService.getAll(user.getId());
+    public List<Board> getAll(@AuthenticationPrincipal User user, @RequestParam String teamId) {
+        return teamId.isEmpty() ? boardService.getAllForUser(user.getId()) : boardService.getAllForTeam(teamId);
     }
 
     @GetMapping("{id}")
@@ -29,8 +28,8 @@ public class BoardRestController {
     }
 
     @PostMapping
-    public Board create(@RequestBody String title, @AuthenticationPrincipal User user) throws AlreadyExistsException {
-        return boardService.create(title, user.getId());
+    public Board create(@RequestBody String title, @RequestParam String teamId, @AuthenticationPrincipal User user) throws AlreadyExistsException {
+        return teamId.isEmpty() ? boardService.createForUser(title, user.getId()) : boardService.createForTeam(title, teamId);
     }
 
 

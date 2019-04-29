@@ -27,4 +27,6 @@ public class Board implements Serializable, Ordered {
     private long order;
 
     private String userId;
+
+    private String teamId;
 }

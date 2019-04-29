@@ -19,7 +19,7 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Board create(String title, String userId) throws AlreadyExistsException {
+    public Board createForUser(String title, String userId) throws AlreadyExistsException {
         if (boardRepository.existsByTitleAndUserId(title, userId)) {
             throw new AlreadyExistsException("Board with '" + title + "' already exists");
         }
@@ -27,13 +27,27 @@ public class BoardService {
                 .title(title).userId(userId).cardLists(new ArrayList<>()).order(boardRepository.countByUserId(userId)).build());
     }
 
+    public Board createForTeam(String title, String teamId) throws AlreadyExistsException {
+        if (boardRepository.existsByTitleAndTeamId(title, teamId)) {
+            throw new AlreadyExistsException("Board with '" + title + "' already exists");
+        }
+        return boardRepository.save(Board.builder()
+                .title(title).teamId(teamId).cardLists(new ArrayList<>()).order(boardRepository.countByTeamId(teamId)).build());
+    }
+
     public void move(int previousIndex, int currentIndex, String userId) {
         List<Board> boards = boardRepository.findAllByUserIdOrderByOrder(userId);
         boardRepository.saveAll(OrderedUtils.move(boards, previousIndex, currentIndex));
     }
 
-    public List<Board> getAll(String userId) {
+    public List<Board> getAllForUser(String userId) {
         return boardRepository.findAllByUserIdOrderByOrder(userId).stream()
+                .peek(board -> board.setCardLists(null))
+                .collect(Collectors.toList());
+    }
+
+    public List<Board> getAllForTeam(String teamId) {
+        return boardRepository.findAllByTeamIdOrderByOrder(teamId).stream()
                 .peek(board -> board.setCardLists(null))
                 .collect(Collectors.toList());
     }

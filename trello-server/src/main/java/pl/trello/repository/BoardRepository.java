@@ -11,9 +11,17 @@ public interface BoardRepository extends MongoRepository<Board, String> {
 
     boolean existsByTitleAndUserId(String title, String userId);
 
+    boolean existsByTitleAndTeamId(String title, String teamId);
+
     long countByUserId(String userId);
+
+    long countByTeamId(String teamId);
 
     List<Board> findAllByUserIdOrderByOrder(String userId);
 
+    List<Board> findAllByTeamIdOrderByOrder(String teamId);
+
     List<Board> findAllByUserId(String userId);
+
+    List<Board> findAllByTeamId(String teamId);
 }
