@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
+import pl.trello.core.UserData;
 import pl.trello.model.Authority;
 import pl.trello.model.User;
 import pl.trello.repository.AuthorityRepository;
@@ -25,22 +26,25 @@ public class UserService {
     }
 
     public User getById(String userId) throws NotFoundException {
-        return userRepository.findById(userId).map(user -> {
-            user.setPassword(null);
-            return user;
-        }).orElseThrow(() -> new NotFoundException("User not found"));
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
     }
 
-    public void create(User user) throws AlreadyExistsException, NotFoundException {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new AlreadyExistsException("User with username '" + user.getUsername() + "' already exists");
-        } else if (userRepository.existsByEmail(user.getEmail())) {
-            throw new AlreadyExistsException("User with email '" + user.getEmail() + "' already exists");
+    public void create(UserData userData) throws AlreadyExistsException, NotFoundException {
+        if (userRepository.existsByUsername(userData.getUsername())) {
+            throw new AlreadyExistsException("User with username '" + userData.getUsername() + "' already exists");
+        } else if (userRepository.existsByEmail(userData.getEmail())) {
+            throw new AlreadyExistsException("User with email '" + userData.getEmail() + "' already exists");
         }
+        userRepository.save(build(userData));
+    }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAuthorities(Collections.singleton(getAuthority("USER")));
-        userRepository.save(user);
+    private User build(UserData userData) throws NotFoundException {
+        return User.builder()
+            .username(userData.getUsername())
+            .email(userData.getEmail())
+            .password(passwordEncoder.encode(userData.getPassword()))
+            .authorities(Collections.singleton(getAuthority("USER")))
+            .build();
     }
 
     private Authority getAuthority(String authority) throws NotFoundException {

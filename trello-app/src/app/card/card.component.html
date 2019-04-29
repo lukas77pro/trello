@@ -48,9 +48,7 @@
             Brak komentarzy
           </div>
           <div *ngFor="let comment of data.card.comments.reverse()">
-            <div *ngIf="getAuthor(comment.authorId) as user">
-              <div>{{ getCommentDate(comment) }}<b>{{ user.username }}</b> napisał(a):</div> 
-            </div>
+            <div>{{ getCommentDate(comment) }}<b>{{ comment.author.username }}</b> napisał(a):</div> 
             <div class="comment-content">
               {{ comment.content }}
             </div>

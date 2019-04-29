@@ -1,5 +1,6 @@
 package pl.trello.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class User implements UserDetails, Serializable {
     @Indexed(unique = true)
     private String username;
 
+    @JsonIgnore
     private String password;
 
     @DBRef

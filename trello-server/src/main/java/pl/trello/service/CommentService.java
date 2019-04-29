@@ -30,7 +30,7 @@ public class CommentService {
         return Comment.builder()
                 .id(Utils.generateId())
                 .content(content)
-                .authorId(user.getId())
+                .author(user)
                 .creationDate(new Date().getTime())
                 .build();
     }

@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
+import pl.trello.core.UserData;
 import pl.trello.model.User;
 import pl.trello.service.UserService;
 
@@ -18,8 +19,8 @@ public class UserRestController {
     }
 
     @PostMapping
-    public void create(@RequestBody User user) throws NotFoundException, AlreadyExistsException {
-        userService.create(user);
+    public void create(@RequestBody UserData userData) throws NotFoundException, AlreadyExistsException {
+        userService.create(userData);
     }
 
     @GetMapping("{id}")

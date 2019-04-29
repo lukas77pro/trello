@@ -21,17 +21,11 @@ export class CardComponent {
 
   commentsVisible = false;
   descriptionEdition = false;
-  authors: Map<string, User>;
 
   constructor(private cardService: CardService,
               private commentService: CommentService,
-              private userService: UserService,
               private dialogRef: MatDialogRef<CardComponent>,
               @Inject(MAT_DIALOG_DATA) public data: CardData) {
-  }
-
-  getAuthor(userId: string): User {
-    return this.authors.get(userId);
   }
 
   editDescription() {
@@ -70,20 +64,10 @@ export class CardComponent {
   }
 
   toggleComments() {
-    if (!this.authors) {
-      this.loadAuthors();
-    }
     this.commentsVisible = !this.commentsVisible;
   }
 
   getCommentDate(comment: Comment) {
-    return `[${new Date(comment.creationDate).toLocaleString().slice(0, -3)}] `;
+    return `[${new Date(comment.creationDate).toLocaleString()}] `;
   }
-
-  private loadAuthors() {
-    this.authors = new Map<string, User>();
-    this.data.card.comments
-     .map(comment => this.userService.get(comment.authorId))
-     .forEach(request => request.subscribe(user => this.authors.set(user.id, user)));
- }
 }
