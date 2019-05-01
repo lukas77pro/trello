@@ -33,6 +33,8 @@ public class User implements UserDetails, Serializable {
     @JsonIgnore
     private String password;
 
+    private String imageId;
+
     @DBRef
     private Set<Authority> authorities;
 
