@@ -1,8 +1,14 @@
 <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="account-container">
         <div *ngIf="getUser() as user; else elseBlock">
+            {{ getUserImageUrl(user.imageId) }}
             <div matBadge="8" matBadgeColor="accent" class="user-icon" [matMenuTriggerFor]="menu">
-                {{ user.username.charAt(0).toUpperCase() }}
+                <div *ngIf="!imageUrl">
+                    {{ user.username.charAt(0).toUpperCase() }}
+                </div>
+                <div *ngIf="imageUrl">
+                    <img  class="avatar" [src]="imageUrl">
+                </div>
             </div>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item [routerLink]="['/user']" routerLinkActive="router-link-active" >Profil</button>

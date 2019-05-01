@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EventService} from 'src/event/event.service';
-import { UserLoggedOut, UserLoggedIn } from 'src/event/events';
 import { User } from 'src/model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
