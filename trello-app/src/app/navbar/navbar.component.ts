@@ -34,6 +34,7 @@ export class NavbarComponent {
 
   logout(): void {
     this.imageUrl = null;
+    this.loadingImage = false;
     this.authService.logout();
   }
 }

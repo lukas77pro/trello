@@ -2,7 +2,7 @@
     <div class="account-container">
         <div *ngIf="getUser() as user; else elseBlock">
             {{ getUserImageUrl(user.imageId) }}
-            <div matBadge="8" matBadgeColor="accent" class="user-icon" [matMenuTriggerFor]="menu">
+            <div matBadge="8" matBadgeColor="accent" class="user-icon mat-elevation-z1" [matMenuTriggerFor]="menu">
                 <div *ngIf="!imageUrl">
                     {{ user.username.charAt(0).toUpperCase() }}
                 </div>
