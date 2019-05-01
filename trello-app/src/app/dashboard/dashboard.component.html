@@ -13,10 +13,10 @@
       <h2>Moje tablice</h2>
       <app-board-list [team]="null"></app-board-list>
     </div>
-    <div *ngFor="let team of teams">
+    <div class="board-list" *ngFor="let team of teams">
       <h2>{{ team.name }}</h2>
       <app-board-list [team]="team">
       </app-board-list>
-    </div>    
-  </div>
+    </div>
+  </div>        
 </div>

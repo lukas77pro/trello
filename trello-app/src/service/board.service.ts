@@ -39,12 +39,13 @@ export class BoardService {
     });
   }
 
-  move(previousIndex: number, currentIndex: number): Observable<{}> {
+  move(previousIndex: number, currentIndex: number, teamId: string): Observable<{}> {
     return this.httpClient.put(`${this.BASE_URL}/boards/move`, {}, {
       headers: this.authService.getAuthHeader(),
       params: new HttpParams()
         .append('previousIndex', previousIndex.toString())
         .append('currentIndex', currentIndex.toString())
+        .append('teamId', teamId)
     });
   }
 }

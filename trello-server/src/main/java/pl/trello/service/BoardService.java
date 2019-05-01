@@ -35,8 +35,13 @@ public class BoardService {
                 .title(title).teamId(teamId).cardLists(new ArrayList<>()).order(boardRepository.countByTeamId(teamId)).build());
     }
 
-    public void move(int previousIndex, int currentIndex, String userId) {
+    public void moveForUser(int previousIndex, int currentIndex, String userId) {
         List<Board> boards = boardRepository.findAllByUserIdOrderByOrder(userId);
+        boardRepository.saveAll(OrderedUtils.move(boards, previousIndex, currentIndex));
+    }
+
+    public void moveForTeam(int previousIndex, int currentIndex, String teamId) {
+        List<Board> boards = boardRepository.findAllByTeamIdOrderByOrder(teamId);
         boardRepository.saveAll(OrderedUtils.move(boards, previousIndex, currentIndex));
     }
 
@@ -75,12 +80,10 @@ public class BoardService {
         throw new NotFoundException("Board with ID '" + board.getId() + "' not found");
     }
 
-    public void delete(String id, String userId) {
+    public void delete(String id) throws NotFoundException {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new NotFoundException("Board not found"));
         boardRepository.deleteById(id);
-        reorder(userId);
-    }
-
-    private void reorder(String userId) {
-        boardRepository.saveAll(OrderedUtils.reorder(boardRepository.findAllByUserId(userId)));
+        boardRepository.saveAll(OrderedUtils.reorder(board.getTeamId() == null ?
+                boardRepository.findAllByUserId(board.getUserId()) : boardRepository.findAllByTeamId(board.getTeamId())));
     }
 }

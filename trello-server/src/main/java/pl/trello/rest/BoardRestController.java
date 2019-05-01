@@ -33,18 +33,22 @@ public class BoardRestController {
     }
 
 
+    @PutMapping("move")
+    public void move(@RequestParam int previousIndex, @RequestParam int currentIndex, @RequestParam String teamId, @AuthenticationPrincipal User user) {
+        if (teamId.isEmpty()) {
+            boardService.moveForUser(previousIndex, currentIndex, user.getId());
+        } else {
+            boardService.moveForTeam(previousIndex, currentIndex, teamId);
+        }
+    }
+
     @PutMapping("{id}")
     public Board update(@PathVariable String id, @RequestBody Board board) throws NotFoundException {
         return boardService.update(id, board);
     }
 
-    @PutMapping("move")
-    public void move(@RequestParam int previousIndex, @RequestParam int currentIndex, @AuthenticationPrincipal User user) {
-        boardService.move(previousIndex, currentIndex, user.getId());
-    }
-
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id, @AuthenticationPrincipal User user) {
-        boardService.delete(id, user.getId());
+    public void delete(@PathVariable String id) throws NotFoundException {
+        boardService.delete(id);
     }
 }

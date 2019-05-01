@@ -32,7 +32,6 @@ export class BoardListComponent {
   }
 
   deleteBoard(id: string, boards: Board[]) {
-    console.log(id);
     this.boardService.delete(id).subscribe(() => {
       boards.splice(boards.map(board => board.id).indexOf(id), 1);
     });
@@ -40,6 +39,6 @@ export class BoardListComponent {
 
   onBoardDropped(event: CdkDragDrop<Board[]>, boards: Board[]) {
     moveItemInArray(boards, event.previousIndex, event.currentIndex);
-    this.boardService.move(event.previousIndex, event.currentIndex).subscribe();
+    this.boardService.move(event.previousIndex, event.currentIndex, this.teamId).subscribe();
   }
 }
