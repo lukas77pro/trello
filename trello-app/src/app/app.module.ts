@@ -41,7 +41,8 @@ import {
   MatSnackBarModule,
   MatTableModule,
   MatSortModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatBadgeModule
 } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -49,6 +50,7 @@ import { CardComponent } from './card/card.component';
 import { TeamComponent } from './team/team.component';
 import { CreateTeamComponent } from './team/create-team/create-team.component';
 import { BoardListComponent } from './board-list/board-list.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { BoardListComponent } from './board-list/board-list.component';
     CardComponent,
     TeamComponent,
     CreateTeamComponent,
-    BoardListComponent
+    BoardListComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +104,7 @@ import { BoardListComponent } from './board-list/board-list.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatBadgeModule,
     DragDropModule
   ],
   entryComponents: [

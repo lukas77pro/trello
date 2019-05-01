@@ -1,12 +1,17 @@
 <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="account-container">
         <div *ngIf="getUser() as user; else elseBlock">
-            {{ user.username }}
-            <button mat-raised-button (click)="logout()">Wyloguj</button>
+            <div matBadge="8" matBadgeColor="accent" class="user-icon" [matMenuTriggerFor]="menu">
+                {{ user.username.charAt(0).toUpperCase() }}
+            </div>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item [routerLink]="['/user']" routerLinkActive="router-link-active" >Profil</button>
+                <button mat-menu-item (click)="logout()">Wyloguj</button>
+            </mat-menu>
         </div>
         <ng-template #elseBlock>
-            <a mat-raised-button routerLink="/login">Zaloguj</a>
-            <a mat-raised-button color="accent" routerLink="/signup">Zarejestruj się</a>
+            <a mat-raised-button routerLink="/login">Logowanie</a>
+            <a mat-raised-button color="accent" routerLink="/signup">Rejestracja</a>
         </ng-template>
     </div>
     <div>

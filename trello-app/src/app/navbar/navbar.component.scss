@@ -11,6 +11,17 @@
             a {
                 margin-left: 8px;
             }
+
+            .user-icon {
+                width: 42px;
+                height: 42px;
+                line-height: 42px;
+                border-radius: 50%;
+                font-size: 24px;
+                background: gray;
+                text-align: center;
+                cursor: pointer;
+            };
         }
     }
 
