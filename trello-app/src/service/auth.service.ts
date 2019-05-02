@@ -24,13 +24,16 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.httpClient.get<User>(`${this.BASE_URL}/user`, {
+    return this.httpClient.get<User>(`${this.BASE_URL}/users`, {
       headers: new HttpHeaders().append('Authorization', `Basic ${btoa(`${username}:${password}`)}`)
     }).subscribe(user => {
-      this.user = { ...user, password: password };
-      localStorage.setItem(this.KEY_USER, JSON.stringify(this.user));
+      this.user = this.saveUser({ ...user, password: password });
       this.router.navigate([''])
     })
+  }
+
+  updateUserImage(imageId: string) {
+    this.user = this.saveUser({...this.user, imageId: imageId});
   }
 
   logout() {
@@ -47,5 +50,10 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.user != null;
+  }
+
+  private saveUser(user: User) {
+    localStorage.setItem(this.KEY_USER, JSON.stringify(user));
+    return user;
   }
 }

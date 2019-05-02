@@ -8,19 +8,24 @@ import pl.trello.core.UserData;
 import pl.trello.model.Authority;
 import pl.trello.model.User;
 import pl.trello.repository.AuthorityRepository;
+import pl.trello.repository.ImageRepository;
 import pl.trello.repository.UserRepository;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService {
 
     private UserRepository userRepository;
+    private ImageRepository imageRepository;
     private AuthorityRepository authorityRepository;
     private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, ImageRepository imageRepository,
+                       AuthorityRepository authorityRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.imageRepository = imageRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -36,6 +41,19 @@ public class UserService {
             throw new AlreadyExistsException("User with email '" + userData.getEmail() + "' already exists");
         }
         userRepository.save(build(userData));
+    }
+
+    public void setImageId(String userId, String imageId) throws NotFoundException {
+        User user = getById(userId);
+        if (user.getImageId() != null) {
+            imageRepository.deleteById(user.getImageId());
+        }
+        user.setImageId(imageId);
+        userRepository.save(user);
+    }
+
+    public List<User> search(String pattern) {
+        return userRepository.findAllByUsernameStartsWithIgnoreCase(pattern);
     }
 
     private User build(UserData userData) throws NotFoundException {

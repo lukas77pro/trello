@@ -1,9 +1,12 @@
 package pl.trello.rest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.trello.core.NotFoundException;
+import pl.trello.model.User;
 import pl.trello.service.ImageService;
+import pl.trello.service.UserService;
 
 import java.io.IOException;
 
@@ -18,12 +21,12 @@ public class ImageRestController {
     }
 
     @GetMapping("{id}")
-    public byte[] get(@PathVariable String id) throws NotFoundException {
-        return imageService.get(id);
+    public byte[] get(@PathVariable String id, @RequestParam(defaultValue = "0") int size) throws NotFoundException {
+        return imageService.get(id, size);
     }
 
     @PostMapping
-    public void upload(@RequestParam MultipartFile image) throws IOException {
-        imageService.create(image);
+    public String upload(@RequestParam MultipartFile image, @AuthenticationPrincipal User user) throws IOException, NotFoundException {
+        return imageService.create(image, user.getId());
     }
 }
