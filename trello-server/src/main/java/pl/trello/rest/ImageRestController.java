@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.trello.core.NotFoundException;
 import pl.trello.model.User;
 import pl.trello.service.ImageService;
-import pl.trello.service.UserService;
 
 import java.io.IOException;
 

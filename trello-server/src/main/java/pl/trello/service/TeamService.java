@@ -8,7 +8,6 @@ import pl.trello.repository.TeamRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -28,6 +27,7 @@ public class TeamService {
                 .name(name)
                 .creator(user)
                 .members(new ArrayList<>())
+                .invitedUsers(new ArrayList<>())
                 .build());
     }
 

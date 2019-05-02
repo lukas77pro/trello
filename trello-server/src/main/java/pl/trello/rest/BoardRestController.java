@@ -1,13 +1,14 @@
 package pl.trello.rest;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.trello.core.AlreadyExistsException;
 import pl.trello.core.NotFoundException;
 import pl.trello.model.Board;
 import pl.trello.model.User;
 import pl.trello.service.BoardService;
+
 import java.util.List;
 
 @RestController

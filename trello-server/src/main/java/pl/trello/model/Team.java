@@ -25,4 +25,6 @@ public class Team implements Serializable {
     private User creator;
     @DBRef
     private List<User> members;
+    @DBRef
+    private List<User> invitedUsers;
 }

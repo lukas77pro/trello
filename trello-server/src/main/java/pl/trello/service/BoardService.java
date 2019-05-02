@@ -6,6 +6,7 @@ import pl.trello.core.NotFoundException;
 import pl.trello.core.OrderedUtils;
 import pl.trello.model.Board;
 import pl.trello.repository.BoardRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
