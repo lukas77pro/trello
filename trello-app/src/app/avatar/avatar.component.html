@@ -1,0 +1,8 @@
+<div [ngStyle]="{'width.px': size, 'height.px': size, 'line-height.px': size, 'font-size.px': size*0.6}" class="avatar mat-elevation-z1">
+    <div *ngIf="!imageUrl">
+        {{ initial }}
+    </div>
+    <div *ngIf="imageUrl">
+        <img class="avatar" [src]="imageUrl">
+    </div>
+</div>

@@ -51,6 +51,7 @@ import { TeamComponent } from './team/team.component';
 import { CreateTeamComponent } from './team/create-team/create-team.component';
 import { BoardListComponent } from './board-list/board-list.component';
 import { UserComponent } from './user/user.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { UserComponent } from './user/user.component';
     TeamComponent,
     CreateTeamComponent,
     BoardListComponent,
-    UserComponent
+    UserComponent,
+    AvatarComponent
   ],
   imports: [
     BrowserModule,
@@ -109,6 +111,7 @@ import { UserComponent } from './user/user.component';
   ],
   entryComponents: [
     CardComponent,
+    TeamComponent,
     CreateTeamComponent
   ],
   providers: [],
