@@ -1,3 +1,42 @@
-<div *ngIf="team$ | async as team">   
+<h1>   
   {{ team.name }}
+</h1>
+<div class="creator-header">
+  <h3>
+    Założyciel
+  </h3>
+  <div *ngIf="you()">
+    <button mat-raised-button tabindex="-1" color="warn">Usuń zespół</button>
+  </div>
 </div>
+<div class="creator">
+  <div class="creator-info">
+    <app-avatar [size]="36" [user]="team.creator"></app-avatar>
+    <div>{{ team.creator.username }}</div>
+    <div *ngIf="you()" class="creator-you">(Ty)</div>
+  </div>
+  <div>
+    
+  </div>  
+</div>
+<div class="members-header">
+  <h3>
+    Członkowie
+  </h3>
+  <mat-form-field appearance="outline">
+      <mat-label>Zaproś użytkownika</mat-label>
+      <input matInput placeholder="Użytkownik" [formControl]="pattern" [matAutocomplete]="results">
+      <mat-autocomplete #results="matAutocomplete" (optionSelected)="optionSelected($event.option.value)">
+        <mat-option *ngFor="let user of users" [value]="user">
+          <mat-icon>
+            <app-avatar [size]="24" [user]="user"></app-avatar>
+          </mat-icon>
+          {{ user.username }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+</div>
+<div *ngFor="let member of team.members">
+
+</div>
+<h3>Zaproszenia</h3>

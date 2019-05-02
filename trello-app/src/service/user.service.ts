@@ -14,12 +14,19 @@ export class UserService {
   }
 
   get(userId: string): Observable<User> {
-    return this.httpClient.get<User>(`${this.BASE_URL}/user/${userId}`, {
+    return this.httpClient.get<User>(`${this.BASE_URL}/users/${userId}`, {
       headers: this.authService.getAuthHeader()
     });
   }
 
+  search(pattern: string): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.BASE_URL}/users/search`, {
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams().append('pattern', pattern)
+    });
+  }
+
   create(user: User): Observable<{}> {
-    return this.httpClient.post<{}>(`${this.BASE_URL}/user`, user);
+    return this.httpClient.post<{}>(`${this.BASE_URL}/users`, user);
   }
 }
