@@ -5,9 +5,9 @@
     <div class="row">
       <app-team-member [user]="team.creator" [you]="you(team)"></app-team-member>
       <div *ngIf="you(team)">
-        <button mat-raised-button color="warn" tabindex="-1">
+        <button mat-raised-button color="warn" tabindex="-1" (click)="deleteTeam(team)">
           <mat-icon>delete</mat-icon>
-          <span>Usuń grupę</span>
+          <span>Usuń zespół</span>
         </button>
       </div>
     </div>

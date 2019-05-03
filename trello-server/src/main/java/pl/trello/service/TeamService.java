@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.trello.core.NotFoundException;
 import pl.trello.model.Team;
 import pl.trello.model.User;
+import pl.trello.repository.BoardRepository;
 import pl.trello.repository.TeamRepository;
 
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ import java.util.List;
 public class TeamService {
 
     private TeamRepository teamRepository;
+    private BoardRepository boardRepository;
     private UserService userService;
 
-    public TeamService(TeamRepository teamRepository, UserService userService) {
+    public TeamService(TeamRepository teamRepository, BoardRepository boardRepository, UserService userService) {
         this.teamRepository = teamRepository;
+        this.boardRepository = boardRepository;
         this.userService = userService;
     }
 
@@ -47,5 +50,10 @@ public class TeamService {
         Team team = getById(id);
         team.getInvitedUsers().removeIf(user -> user.getId().equals(userId));
         teamRepository.save(team);
+    }
+
+    public void delete(String id) {
+        teamRepository.deleteById(id);
+        boardRepository.deleteByTeamId(id);
     }
 }

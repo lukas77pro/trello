@@ -31,6 +31,12 @@ export class TeamService {
     });
   }
 
+  delete(id: string): Observable<{}> {
+    return this.httpClient.delete(`${this.BASE_URL}/teams/${id}`, {
+      headers: this.authService.getAuthHeader()
+    });
+  }
+
   addInvitation(id: string, userId: string): Observable<{}> {
     return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/add`, name, {
       headers: this.authService.getAuthHeader(),

@@ -43,4 +43,9 @@ public class TeamRestController {
     public List<Team> getAllForUser(@AuthenticationPrincipal User user) {
         return teamService.getAllForUser(user);
     }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable String id) {
+        teamService.delete(id);
+    }
 }

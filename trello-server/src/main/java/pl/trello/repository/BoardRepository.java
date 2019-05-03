@@ -24,4 +24,6 @@ public interface BoardRepository extends MongoRepository<Board, String> {
     List<Board> findAllByUserId(String userId);
 
     List<Board> findAllByTeamId(String teamId);
+
+    void deleteByTeamId(String id);
 }

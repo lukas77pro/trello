@@ -61,4 +61,8 @@ export class TeamComponent implements OnInit {
   you(team: Team): boolean {
     return this.authService.user.id === team.creator.id;
   }
+
+  deleteTeam(team: Team) {
+    this.teamService.delete(team.id).subscribe(() => this.dialogRef.close(true));
+  }
 }
