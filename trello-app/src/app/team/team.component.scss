@@ -1,50 +1,28 @@
-.creator {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.row {
+    display: flex ;
     justify-content: space-between;
-
-
-    &-info {        
-        display: flex;
-        flex-direction: row;
-        align-items: center;    
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    &-header {        
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    &-you {        
-        font-size: 12px;
-        margin-left: 4px;
-    }
-    
-    app-avatar {
-        margin-right: 8px;
-    }
+    align-items: center;
 }
 
 h1 {
     text-align: center;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;    
 }
 
-h3 {
-    margin-top: 8px;
-    margin-bottom: 0px;
+h2 {
+    margin: 0px;
 }
 
-::ng-deep .mat-form-field-wrapper {
-    padding-bottom: 0;
-}
 
 .members-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
+}
+
+app-team-member {
+    margin: 8px 0;
 }

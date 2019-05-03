@@ -12,12 +12,12 @@ export class CreateTeamComponent {
   teamName = new FormControl('', Validators.required);
 
   constructor(private teamService: TeamService,
-              private dialogRef: MatDialogRef<CreateTeamComponent>) { }
+              private dialogRef: MatDialogRef<CreateTeamComponent>) {
+  }
 
   addTeam() {
     this.teamService
       .create(this.teamName.value)
       .subscribe(team => this.dialogRef.close(team));
   }
-
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Team } from 'src/model/team';
@@ -28,6 +28,20 @@ export class TeamService {
   create(name: string): Observable<Team> {
     return this.httpClient.post<Team>(`${this.BASE_URL}/teams`, name, {
       headers: this.authService.getAuthHeader()
+    });
+  }
+
+  addInvitation(id: string, userId: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/add`, name, {
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams().append('userId', userId)
+    });
+  }
+
+  removeInvitation(id: string, userId: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/remove`, name, {
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams().append('userId', userId)
     });
   }
 }

@@ -8,6 +8,7 @@ import { debounceTime, map, switchMap, filter } from 'rxjs/operators';
 import { UserService } from 'src/service/user.service';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-team',
@@ -15,6 +16,7 @@ import { AuthService } from 'src/service/auth.service';
   styleUrls: ['./team.component.scss']
 })
 export class TeamComponent implements OnInit {
+  team$: Observable<Team>;
   pattern = new FormControl('');
   users: User[] = [];
 
@@ -22,7 +24,8 @@ export class TeamComponent implements OnInit {
               private userService: UserService,
               private authService: AuthService,
               private dialogRef: MatDialogRef<CreateTeamComponent>,
-              @Inject(MAT_DIALOG_DATA) public team: Team) {
+              @Inject(MAT_DIALOG_DATA) public teamId: string) {
+    this.team$ = this.teamService.get(teamId);
   }
 
   ngOnInit(): void {
@@ -31,18 +34,31 @@ export class TeamComponent implements OnInit {
       map(pattern => pattern.trim()),
       filter(pattern => pattern.length > 0),
       switchMap(pattern => this.userService.search(pattern))
-    ).subscribe(users => this.users = users.filter(user => !(this.team.creator.id === user.id ||
-      this.team.invitedUsers.find(invitedUser => invitedUser.id === user.id) ||
-      this.team.members.find(member => member.id === user.id)
-    )));
+    ).subscribe(users => this.users = users);
   }
 
-  optionSelected(option) {
+  userSelected(user: User, team: Team) {
     this.pattern.setValue('');
-    console.log(option);
+    this.teamService
+      .addInvitation(team.id, user.id)
+      .subscribe(() => team.invitedUsers.push(user));
   }
 
-  you(): boolean {
-    return this.team.creator.id === this.authService.user.id;
+  cancelInvitation(user: User, team: Team) {
+    this.teamService
+      .removeInvitation(team.id, user.id)
+      .subscribe(() => team.invitedUsers = team.invitedUsers.filter(invitedUser => invitedUser.id !== user.id));
+  }
+
+  filterUsers(users: User[], team: Team) {
+    return users.filter(user => !(
+      team.creator.id === user.id ||
+      team.members.map(member => member.id).includes(user.id) ||
+      team.invitedUsers.map(invitedUser => invitedUser.id).includes(user.id)
+    ));
+  }
+
+  you(team: Team): boolean {
+    return this.authService.user.id === team.creator.id;
   }
 }

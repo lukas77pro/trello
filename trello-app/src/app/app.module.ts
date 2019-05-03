@@ -52,6 +52,7 @@ import { CreateTeamComponent } from './team/create-team/create-team.component';
 import { BoardListComponent } from './board-list/board-list.component';
 import { UserComponent } from './user/user.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { TeamMemberComponent } from './team/team-member/team-member.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { AvatarComponent } from './avatar/avatar.component';
     CreateTeamComponent,
     BoardListComponent,
     UserComponent,
-    AvatarComponent
+    AvatarComponent,
+    TeamMemberComponent
   ],
   imports: [
     BrowserModule,

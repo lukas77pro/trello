@@ -39,7 +39,7 @@ export class DashboardComponent {
   openTeamDialog(team: Team) {
     this.matDialog.open(TeamComponent, {
       width: '480px',
-      data: team
+      data: team.id
     });
   }
 }

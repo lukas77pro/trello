@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="account-container">
         <div *ngIf="getUser() as user; else elseBlock">
-            <div matBadgePosition="below | before" matBadge="8" matBadgeColor="accent">
+            <div matBadgePosition="below | before" matBadge="8" matBadgeColor="warn">
                 <app-avatar [size]="48" [user]="user" [matMenuTriggerFor]="menu">
                 </app-avatar>
             </div>
