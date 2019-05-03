@@ -1,8 +1,13 @@
-<div [ngStyle]="{'width.px': size, 'height.px': size, 'line-height.px': size, 'font-size.px': size*0.6}" class="avatar mat-elevation-z1">
-    <div *ngIf="!imageUrl">
-        {{ initial }}
-    </div>
-    <div *ngIf="imageUrl">
-        <img class="avatar" [src]="imageUrl">
+<div [ngStyle]="{'width.px': size, 'height.px': size, 'line-height.px': size, 'font-size.px': size*0.6}" class="avatar mat-elevation-z1">      
+    <div *ngIf="!loading">
+        <div *ngIf="!imageUrl">
+            {{ initial }}
+        </div>
+        <div *ngIf="imageUrl">
+            <img [src]="imageUrl">
+        </div>
+    </div>  
+    <div *ngIf="loading">
+        <mat-spinner color="accent" [diameter]="size"></mat-spinner>
     </div>
 </div>

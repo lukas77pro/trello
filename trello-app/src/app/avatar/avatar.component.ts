@@ -13,6 +13,7 @@ import { filter, map } from 'rxjs/operators';
 export class AvatarComponent {
   initial: string;
   imageUrl: SafeUrl;
+  loading = false;
 
   @Input() size: number;
   @Input() set user(user: User) {
@@ -27,8 +28,12 @@ export class AvatarComponent {
   }
 
   loadUserImage(imageId: string) {
+    this.loading = true;
     this.imageService.get(imageId, this.size).pipe(
       map(image => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(image)
-    ))).subscribe(safeUrl => this.imageUrl = safeUrl);
+    ))).subscribe(safeUrl => {
+      this.imageUrl = safeUrl;
+      this.loading = false;
+    });
   }
 }
