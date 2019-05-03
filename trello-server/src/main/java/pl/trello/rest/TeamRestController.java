@@ -24,6 +24,16 @@ public class TeamRestController {
         return teamService.getById(id);
     }
 
+    @PutMapping("{id}/invitations/add")
+    public void addInvitation(@PathVariable String id, @RequestParam String userId) throws NotFoundException {
+        teamService.addInvitation(id, userId);
+    }
+
+    @PutMapping("{id}/invitations/remove")
+    public void removeInvitation(@PathVariable String id, @RequestParam String userId) throws NotFoundException {
+        teamService.removeInvitation(id, userId);
+    }
+
     @PostMapping
     public Team create(@AuthenticationPrincipal User user, @RequestBody String name) {
         return teamService.create(name, user);

@@ -13,9 +13,11 @@ import java.util.List;
 public class TeamService {
 
     private TeamRepository teamRepository;
+    private UserService userService;
 
-    public TeamService(TeamRepository teamRepository) {
+    public TeamService(TeamRepository teamRepository, UserService userService) {
         this.teamRepository = teamRepository;
+        this.userService = userService;
     }
 
     public Team getById(String id) throws NotFoundException {
@@ -33,5 +35,17 @@ public class TeamService {
 
     public List<Team> getAllForUser(User user) {
         return teamRepository.findAllByCreatorOrMembersContaining(user, user);
+    }
+
+    public void addInvitation(String id, String userId) throws NotFoundException {
+        Team team = getById(id);
+        team.getInvitedUsers().add(userService.getById(userId));
+        teamRepository.save(team);
+    }
+
+    public void removeInvitation(String id, String userId) throws NotFoundException {
+        Team team = getById(id);
+        team.getInvitedUsers().removeIf(user -> user.getId().equals(userId));
+        teamRepository.save(team);
     }
 }
