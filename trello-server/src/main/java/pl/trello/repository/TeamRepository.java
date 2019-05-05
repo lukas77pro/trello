@@ -9,4 +9,6 @@ import java.util.List;
 public interface TeamRepository extends MongoRepository<Team, String> {
 
     List<Team> findAllByCreatorOrMembersContaining(User creator, User member);
+
+    List<Team> findAllByInvitedUsersContaining(User user);
 }

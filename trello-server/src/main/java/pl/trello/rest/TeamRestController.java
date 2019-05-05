@@ -34,6 +34,26 @@ public class TeamRestController {
         teamService.removeInvitation(id, userId);
     }
 
+    @PutMapping("{id}/invitations/accept")
+    public void acceptInvitation(@PathVariable String id, @AuthenticationPrincipal User user) throws NotFoundException {
+        teamService.acceptInvitation(id, user.getId());
+    }
+
+    @PutMapping("{id}/invitations/reject")
+    public void rejectInvitation(@PathVariable String id, @AuthenticationPrincipal User user) throws NotFoundException {
+        teamService.removeInvitation(id, user.getId());
+    }
+
+    @PutMapping("{id}/members/remove")
+    public void removeMember(@PathVariable String id, @RequestParam String userId) throws NotFoundException {
+        teamService.removeMember(id, userId);
+    }
+
+    @PutMapping("{id}/members/leave")
+    public void leaveTeam(@PathVariable String id, @AuthenticationPrincipal User user) throws NotFoundException {
+        teamService.removeMember(id, user.getId());
+    }
+
     @PostMapping
     public Team create(@AuthenticationPrincipal User user, @RequestBody String name) {
         return teamService.create(name, user);
@@ -42,6 +62,11 @@ public class TeamRestController {
     @GetMapping
     public List<Team> getAllForUser(@AuthenticationPrincipal User user) {
         return teamService.getAllForUser(user);
+    }
+
+    @GetMapping("invitations")
+    public List<Team> getInvitations(@AuthenticationPrincipal User user) {
+        return teamService.getInvitations(user);
     }
 
     @DeleteMapping("{id}")

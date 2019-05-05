@@ -56,4 +56,29 @@ public class TeamService {
         teamRepository.deleteById(id);
         boardRepository.deleteByTeamId(id);
     }
+
+    public List<Team> getInvitations(User user) {
+        return teamRepository.findAllByInvitedUsersContaining(user);
+    }
+
+    public void acceptInvitation(String id, String userId) throws NotFoundException {
+        Team team = getById(id);
+        User user = getInvitedUser(userId, team.getInvitedUsers());
+        team.getInvitedUsers().removeIf(invitedUser -> invitedUser.getId().equals(userId));
+        team.getMembers().add(user);
+        teamRepository.save(team);
+    }
+
+    private User getInvitedUser(String userId, List<User> invitedUsers) throws NotFoundException {
+        return invitedUsers.stream()
+                .filter(invitedUser -> invitedUser.getId().equals(userId))
+                .findAny()
+                .orElseThrow(() -> new NotFoundException("Team not found"));
+    }
+
+    public void removeMember(String id, String userId) throws NotFoundException {
+        Team team = getById(id);
+        team.getMembers().removeIf(user -> user.getId().equals(userId));
+        teamRepository.save(team);
+    }
 }
