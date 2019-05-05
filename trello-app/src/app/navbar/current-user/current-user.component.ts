@@ -6,6 +6,7 @@ import { TeamService } from 'src/service/team.service';
 import { Team } from 'src/model/team';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { InvitationsComponent } from 'src/app/navbar/current-user/invitations/invitations.component';
+import { CacheService } from 'src/service/cache.service';
 
 @Component({
   selector: 'app-current-user',
@@ -18,6 +19,7 @@ export class CurrentUserComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private imageService: ImageService,
+              private cacheService: CacheService,
               private teamService: TeamService,
               private snackBar: MatSnackBar,
               private matDialog: MatDialog) {
@@ -46,7 +48,10 @@ export class CurrentUserComponent implements OnInit {
 
   onFileChange(event) {
     const file = event.target.files[0];
-    this.imageService.upload(file).subscribe(imageId => this.authService.updateUserImage(imageId));
+    this.imageService.upload(file).subscribe(imageId => {
+      this.cacheService.removeAll(this.user.imageId);
+      this.authService.updateUserImage(imageId);
+    });
   }
 }
 
