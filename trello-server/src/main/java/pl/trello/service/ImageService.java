@@ -22,11 +22,11 @@ public class ImageService {
         this.userService = userService;
     }
 
-    public byte[] get(String id, int size) throws NotFoundException {
-        return imageRepository.findById(id)
-                .map(Image::getData)
-                .map(data -> size > 0 ? getScaled(data, size) : data)
-                .orElseThrow(() -> new NotFoundException("Image not found"));
+    public Image get(String id, int size) throws NotFoundException {
+        return imageRepository.findById(id).map(image -> {
+            image.setData(size > 0 ? getScaled(image.getData(), size) : image.getData());
+            return image;
+        }).orElseThrow(() -> new NotFoundException("Image not found"));
     }
 
     private byte[] getScaled(byte[] data, int size) {
@@ -40,9 +40,13 @@ public class ImageService {
         return new byte[0];
     }
 
-    public String create(MultipartFile image, String userId) throws IOException, NotFoundException { ;
-        String imageId = imageRepository.save(Image.builder().data(image.getBytes()).build()).getId();
+    public String create(MultipartFile image, String userId) throws IOException, NotFoundException {
+        String imageId = imageRepository.save(build(image)).getId();
         userService.setImageId(userId, imageId);
         return imageId;
+    }
+
+    private Image build(MultipartFile image) throws IOException {
+        return Image.builder().data(image.getBytes()).contentType(image.getContentType()).build();
     }
 }

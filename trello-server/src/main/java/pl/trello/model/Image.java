@@ -18,5 +18,7 @@ public class Image implements Serializable {
     @Id
     private String id;
 
+    private String contentType;
+
     private byte[] data;
 }

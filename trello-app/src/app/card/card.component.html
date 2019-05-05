@@ -50,7 +50,7 @@
           <div *ngFor="let comment of data.card.comments.reverse()">            
             <div>{{ getCommentDate(comment) }}<b>{{ comment.author.username }}</b> napisał(a):</div> 
             <div class="comment-content">
-              <app-avatar [user]="comment.author" [size]="24"></app-avatar>
+              <app-avatar [user]="getAuthor(comment)" [size]="24"></app-avatar>
               {{ comment.content }}
             </div>
           </div>

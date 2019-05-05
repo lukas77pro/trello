@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/model/user';
 import { ImageService } from 'src/service/image.service';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { load } from '@angular/core/src/render3';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-avatar',
@@ -12,7 +11,7 @@ import { filter, map } from 'rxjs/operators';
 })
 export class AvatarComponent {
   initial: string;
-  imageUrl: SafeUrl;
+  imageUrl: string;
   loading = false;
 
   @Input() size: number;
@@ -23,16 +22,13 @@ export class AvatarComponent {
     }
   }
 
-  constructor(private imageService: ImageService,
-              private sanitizer: DomSanitizer) {
+  constructor(private imageService: ImageService) {
   }
 
   loadUserImage(imageId: string) {
     this.loading = true;
-    this.imageService.get(imageId, this.size).pipe(
-      map(image => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(image)
-    ))).subscribe(safeUrl => {
-      this.imageUrl = safeUrl;
+    this.imageService.get(imageId, this.size).subscribe(image => {
+      this.imageUrl = `data:${image.contentType};base64,${image.data}`;
       this.loading = false;
     });
   }

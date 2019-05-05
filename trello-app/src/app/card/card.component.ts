@@ -4,11 +4,10 @@ import { Card } from 'src/model/card';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CardService } from 'src/service/card.service';
 import { CommentService } from 'src/service/comment.service';
-import { UserService } from 'src/service/user.service';
-import { take } from 'rxjs/operators';
 import { User } from 'src/model/user';
 import { CardData } from '../board/board.component';
 import { Comment } from 'src/model/comment';
+import { AuthService } from 'src/service/auth.service';
 
 @Component({
   selector: 'app-card',
@@ -24,7 +23,7 @@ export class CardComponent {
 
   constructor(private cardService: CardService,
               private commentService: CommentService,
-              private dialogRef: MatDialogRef<CardComponent>,
+              private authService: AuthService,
               @Inject(MAT_DIALOG_DATA) public data: CardData) {
   }
 
@@ -69,5 +68,9 @@ export class CardComponent {
 
   getCommentDate(comment: Comment) {
     return `[${new Date(comment.creationDate).toLocaleString()}] `;
+  }
+
+  getAuthor(comment: Comment): User {
+    return comment.author.id === this.authService.user.id ? this.authService.user : comment.author;
   }
 }

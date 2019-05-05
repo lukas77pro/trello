@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Image } from 'src/model/image';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,10 @@ export class ImageService {
     });
   }
 
-  get(id: String, size: number = 0): Observable<Blob> {
-    return this.httpClient.get(`${this.BASE_URL}/images/${id}`, {
+  get(id: String, size: number = 0): Observable<Image> {
+    return this.httpClient.get<Image>(`${this.BASE_URL}/images/${id}`, {
       headers: this.authService.getAuthHeader(),
-      params: new HttpParams().append('size', `${size}`),
-      responseType: 'blob'
+      params: new HttpParams().append('size', `${size}`)
     });
   }
 }
