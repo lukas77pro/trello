@@ -45,8 +45,14 @@
         }
 
         &-content {
+            display: flex;
+            align-items: center;
             font-size: 16px;
             margin-bottom: 8px;
+
+            app-avatar {
+                margin-right: 8px;
+            }
         }
     }
 
