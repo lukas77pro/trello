@@ -13,3 +13,10 @@ server:
   servlet:
     context-path: /${spring.application.name}
   port: 8098
+---
+spring:
+  profiles: local
+  data:
+    mongodb:
+      host: localhost
+
