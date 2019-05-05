@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Zaproszenia</h1>
+<div mat-dialog-content>
+  <div *ngFor="let invitation of invitations; last as last">
+    <div class="invitation">
+      <app-team-member [user]=invitation.creator></app-team-member>
+      <h3>{{ invitation.name }}</h3>
+      <div>
+        <button mat-icon-button tabindex="-1" matTooltip="Zaakceptuj" (click)="accept(invitation)">
+          <mat-icon>check</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button mat-icon-button tabindex="-1" matTooltip="Odrzuć"(click)="reject(invitation)" color="warn">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-divider *ngIf="!last"></mat-divider>
+  </div>
+</div>
+

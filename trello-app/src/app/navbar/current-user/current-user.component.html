@@ -1,0 +1,23 @@
+<div matBadgePosition="below | before" [matBadge]="invitations.length" matBadgeColor="warn" [matBadgeHidden]="!invitations.length">
+    <app-avatar [size]="48" [user]="user" [matMenuTriggerFor]="menu">
+    </app-avatar>
+</div>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/user']" routerLinkActive="router-link-active">
+        <mat-icon>person</mat-icon>
+        <span>Profil</span>
+    </button>
+    <button mat-menu-item (click)="imageInput.click()">
+        <mat-icon>add_a_photo</mat-icon>
+        <span>Zdjęcie</span>
+    </button>
+    <button mat-menu-item (click)="openInvitationsDialog()">
+      <mat-icon>people</mat-icon>
+      <span>Zaproszenia</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Wyloguj</span>
+    </button>
+</mat-menu>       
+<input #imageInput type="file" accept="image/jpeg, image/png" [hidden]="true" (change)="onFileChange($event)">    

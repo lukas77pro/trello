@@ -53,6 +53,8 @@ import { BoardListComponent } from './board-list/board-list.component';
 import { UserComponent } from './user/user.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { TeamMemberComponent } from './team/team-member/team-member.component';
+import { CurrentUserComponent } from './navbar/current-user/current-user.component';
+import { InvitationsComponent } from './navbar/current-user/invitations/invitations.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { TeamMemberComponent } from './team/team-member/team-member.component';
     BoardListComponent,
     UserComponent,
     AvatarComponent,
-    TeamMemberComponent
+    TeamMemberComponent,
+    CurrentUserComponent,
+    InvitationsComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +118,8 @@ import { TeamMemberComponent } from './team/team-member/team-member.component';
   entryComponents: [
     CardComponent,
     TeamComponent,
-    CreateTeamComponent
+    CreateTeamComponent,
+    InvitationsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
