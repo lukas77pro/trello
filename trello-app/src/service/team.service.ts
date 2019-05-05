@@ -38,16 +38,47 @@ export class TeamService {
   }
 
   addInvitation(id: string, userId: string): Observable<{}> {
-    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/add`, name, {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/add`, {}, {
       headers: this.authService.getAuthHeader(),
       params: new HttpParams().append('userId', userId)
     });
   }
 
   removeInvitation(id: string, userId: string): Observable<{}> {
-    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/remove`, name, {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/remove`, {}, {
       headers: this.authService.getAuthHeader(),
       params: new HttpParams().append('userId', userId)
+    });
+  }
+
+  getInvitations(): Observable<Team[]> {
+    return this.httpClient.get<Team[]>(`${this.BASE_URL}/teams/invitations`, {
+      headers: this.authService.getAuthHeader()
+    });
+  }
+
+  acceptInvitation(id: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/accept`, {}, {
+      headers: this.authService.getAuthHeader()
+    });
+  }
+
+  rejectInvitation(id: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/invitations/reject`, {},  {
+      headers: this.authService.getAuthHeader()
+    });
+  }
+
+  removeMember(id: string, userId: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/members/remove`, {},  {
+      headers: this.authService.getAuthHeader(),
+      params: new HttpParams().append('userId', userId)
+    });
+  }
+
+  leave(id: string): Observable<{}> {
+    return this.httpClient.put(`${this.BASE_URL}/teams/${id}/members/leave`, {},  {
+      headers: this.authService.getAuthHeader()
     });
   }
 }

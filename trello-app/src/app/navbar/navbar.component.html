@@ -1,23 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="account-container">
         <div *ngIf="getUser() as user; else elseBlock">
-            <div matBadgePosition="below | before" matBadge="8" matBadgeColor="warn">
-                <app-avatar [size]="48" [user]="user" [matMenuTriggerFor]="menu">
-                </app-avatar>
-            </div>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item [routerLink]="['/user']" routerLinkActive="router-link-active">
-                    <mat-icon>person</mat-icon>
-                    <span>Profil</span>
-                </button>
-                <button mat-menu-item (click)="imageInput.click()">
-                    <mat-icon>add_a_photo</mat-icon>
-                    <span>Zdjęcie</span></button>
-                <button mat-menu-item (click)="logout()">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Wyloguj</span></button>
-            </mat-menu>       
-            <input #imageInput type="file" accept="image/jpeg, image/png" [hidden]="true" (change)="onFileChange($event)">     
+            <app-current-user [user]="user" [matTooltip]="user.username"></app-current-user> 
         </div>
         <ng-template #elseBlock>
             <a mat-raised-button routerLink="/login">Logowanie</a>

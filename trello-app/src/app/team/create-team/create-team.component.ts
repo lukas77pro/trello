@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TeamService } from 'src/service/team.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';

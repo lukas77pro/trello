@@ -1,4 +1,4 @@
-<div class="dashboard" *ngIf="teams$ | async as teams">
+<div class="dashboard">
   <div class="teams">
     <h2>Zespoły</h2>
     <button *ngFor="let team of teams" class="team-button" mat-button color="secondary" (click)="openTeamDialog(team.id, teams)">

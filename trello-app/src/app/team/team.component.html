@@ -3,52 +3,70 @@
   <div class="section">
     <h2>Założyciel</h2>
     <div class="row">
-      <app-team-member [user]="team.creator" [you]="you(team)"></app-team-member>
-      <div *ngIf="you(team)">
+      <app-team-member [user]="team.creator" [you]="your(team)"></app-team-member>
+      <div *ngIf="your(team)" >
+        <mat-form-field appearance="outline">
+          <mat-label>Zaproś użytkownika</mat-label>
+          <input matInput placeholder="Użytkownik" [formControl]="pattern" [matAutocomplete]="results">
+          <mat-autocomplete #results="matAutocomplete" (optionSelected)="userSelected($event.option.value, team)">
+            <mat-option *ngFor="let user of filterUsers(users, team)" [value]="user">
+              <mat-icon>
+                <app-avatar [size]="24" [user]="user"></app-avatar>
+              </mat-icon>
+              <span>{{ user.username }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div *ngIf="your(team)">
         <button mat-raised-button color="warn" tabindex="-1" (click)="deleteTeam(team)">
           <mat-icon>delete</mat-icon>
           <span>Usuń zespół</span>
         </button>
       </div>
-    </div>
-    <div *ngIf="you(team)">
-      <mat-form-field appearance="outline">
-        <mat-label>Zaproś użytkownika</mat-label>
-        <input matInput placeholder="Użytkownik" [formControl]="pattern" [matAutocomplete]="results">
-        <mat-autocomplete #results="matAutocomplete" (optionSelected)="userSelected($event.option.value, team)">
-          <mat-option *ngFor="let user of filterUsers(users, team)" [value]="user">
-            <mat-icon>
-              <app-avatar [size]="24" [user]="user"></app-avatar>
-            </mat-icon>
-            <span>{{ user.username }}</span>
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
+    </div>    
   </div>
   <div class="section">
-    <div>
-      <h2>Członkowie</h2>
-
-    </div>
-    <div *ngIf="!team.members.length">
-      (brak członków)
+    <h2>Członkowie</h2>
+    <div *ngIf="!team.members.length" class="empty-list">
+      <h3>(brak członków)</h3>
     </div>
     <div *ngIf="team.members.length">
+      <div *ngFor="let user of team.members; last as last" >
+        <div class="row">
+          <app-team-member [user]="user" [you]="you(user)"></app-team-member>
+          <div *ngIf="your(team)">
+            <button mat-icon-button matTooltip="Usuń z zespołu" tabindex="-1" color="warn"
+              (click)="removeMember(user, team)">
+              <mat-icon aria-label="asd">clear</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="you(user)">
+            <button mat-icon-button matTooltip="Opuść zespół" tabindex="-1" color="warn"
+              (click)="leaveTeam(team)">
+              <mat-icon aria-label="asd">clear</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </div>
     </div>
   </div>
   <div class="section">
     <h2>Zaproszenia</h2>
-    <div *ngIf="!team.invitedUsers.length">
-        (brak zaproszeń)
+    <div *ngIf="!team.invitedUsers.length" class="empty-list">
+        <h3>(brak zaproszeń)</h3>
     </div>
     <div *ngIf="team.invitedUsers.length">
       <div *ngFor="let user of team.invitedUsers; last as last" >
         <div class="row">
-          <app-team-member [user]="user"></app-team-member>
-          <button mat-icon-button color="warn" matTooltip="Cofnij zaproszenie" tabindex="-1" (click)="cancelInvitation(user, team)">
-            <mat-icon aria-label="asd">clear</mat-icon>
-          </button>
+          <app-team-member [user]="user" [you]="you(user)"></app-team-member>
+          <div *ngIf="your(team)">
+            <button mat-icon-button color="warn" matTooltip="Cofnij zaproszenie" tabindex="-1"  color="warn"
+              (click)="cancelInvitation(user, team)">
+              <mat-icon aria-label="asd">redo</mat-icon>
+            </button>
+          </div>
         </div>
         <mat-divider *ngIf="!last"></mat-divider>
       </div>

@@ -10,20 +10,10 @@ import { User } from 'src/model/user';
 })
 export class NavbarComponent {
 
-  constructor(private authService: AuthService,
-              private imageService: ImageService) {
+  constructor(private authService: AuthService) {
   }
 
   getUser(): User {
     return this.authService.user;
-  }
-
-  logout(): void {
-    this.authService.logout();
-  }
-
-  onFileChange(event) {
-    const file = event.target.files[0];
-    this.imageService.upload(file).subscribe(imageId => this.authService.updateUserImage(imageId));
   }
 }

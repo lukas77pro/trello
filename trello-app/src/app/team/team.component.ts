@@ -50,6 +50,18 @@ export class TeamComponent implements OnInit {
       .subscribe(() => team.invitedUsers = team.invitedUsers.filter(invitedUser => invitedUser.id !== user.id));
   }
 
+  leaveTeam(team: Team) {
+    this.teamService
+      .leave(team.id)
+      .subscribe(() => this.dialogRef.close(true));
+  }
+
+  removeMember(user: User, team: Team) {
+    this.teamService
+      .removeMember(team.id, user.id)
+      .subscribe(() => team.members = team.members.filter(member => member.id !== user.id));
+  }
+
   filterUsers(users: User[], team: Team) {
     return users.filter(user => !(
       team.creator.id === user.id ||
@@ -58,8 +70,12 @@ export class TeamComponent implements OnInit {
     ));
   }
 
-  you(team: Team): boolean {
+  your(team: Team): boolean {
     return this.authService.user.id === team.creator.id;
+  }
+
+  you(user: User): boolean {
+    return this.authService.user.id === user.id;
   }
 
   deleteTeam(team: Team) {
