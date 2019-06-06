@@ -55,6 +55,8 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { TeamMemberComponent } from './team/team-member/team-member.component';
 import { CurrentUserComponent } from './navbar/current-user/current-user.component';
 import { InvitationsComponent } from './navbar/current-user/invitations/invitations.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -113,7 +115,8 @@ import { InvitationsComponent } from './navbar/current-user/invitations/invitati
     MatSortModule,
     MatPaginatorModule,
     MatBadgeModule,
-    DragDropModule
+    DragDropModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
     CardComponent,
