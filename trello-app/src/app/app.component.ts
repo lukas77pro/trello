@@ -4,32 +4,36 @@ import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
-  template: `
-  <button class="button button-primary" (click)="subscribeToNotifications()">
-    Subscribe
-  </button>`,
-  //templateUrl: './app.component.html',
-  //styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
-  readonly VAPID_PUBLIC_KEY = "BOqo8P-LKyC-Jf6M1TD3QQhxUDMVFNydhrsJJORsnIYbgr9ESPMjGK2kFErWvswcLsC1hFSmutwg7N1AkG_jwNY";
-
-  constructor(
-    private authService: AuthService,
-    private swPush: SwPush,
-    /*private newsletterService: NewsletterService*/) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.loadUser();
-  }
 
-  subscribeToNotifications() {
-    this.swPush.requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY
-    })
-    /*.then(sub => this.newsletterService.addPushSubscriber(sub).subscribe())*/
-    .catch(err => console.error("Could not subscribe to notifications", err));
-  }
+    Notification.requestPermission(function(status) {
+      console.log('Notification permission status:', status);});
+      displayNotification();
 
+  }
+}
+
+
+function displayNotification() {
+  if (Notification.permission == 'granted') {
+    navigator.serviceWorker.getRegistration().then(function(reg) {
+      var options = {
+        body: 'Here is a notification body!',
+        vibrate: [100, 50, 100],
+        data: {
+          dateOfArrival: Date.now(),
+          primaryKey: 1
+        }
+      };
+      reg.showNotification('Hello world!', options);
+    });
+  }
 }
