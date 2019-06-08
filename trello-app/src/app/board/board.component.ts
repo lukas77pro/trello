@@ -54,6 +54,7 @@ export class BoardComponent implements OnInit {
         cardList.cards.push(card);
         this.cardTitle.setValue('');
       });
+      this.displayNotification();
   }
 
   onCardListDropped(board: Board, event: CdkDragDrop<CardList[]>) {
@@ -80,6 +81,24 @@ export class BoardComponent implements OnInit {
       }
     });
   }
+
+  displayNotification() {
+    if (Notification.permission == 'granted') {
+      navigator.serviceWorker.getRegistration().then(function(reg) {
+        var options = {
+          body: 'My new card!!!',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          }
+        };
+        reg.showNotification('New card added!', options);
+      });
+    }
+  }
+
+
 }
 
 export interface CardData {

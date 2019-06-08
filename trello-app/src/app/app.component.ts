@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
-import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit {
 
   }
 }
-
 
 function displayNotification() {
   if (Notification.permission == 'granted') {
