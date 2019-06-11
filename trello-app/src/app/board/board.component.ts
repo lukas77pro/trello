@@ -12,6 +12,7 @@ import { Card } from 'src/model/card';
 import { CardService } from 'src/service/card.service';
 import { MatDialog } from '@angular/material';
 import { CardComponent } from '../card/card.component';
+import { NotificationService } from 'src/service/notification.service';
 
 @Component({
   selector: 'app-board',
@@ -26,6 +27,7 @@ export class BoardComponent implements OnInit {
   constructor(private boardService: BoardService,
               private cardListService: CardListService,
               private cardService: CardService,
+              private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
               private matDialog: MatDialog) {
   }
@@ -54,7 +56,12 @@ export class BoardComponent implements OnInit {
         cardList.cards.push(card);
         this.cardTitle.setValue('');
       });
-      this.displayNotification();
+      this.displayNotification(cardList.cards.length.toString());
+  }
+
+  createNotification() {
+    var title = "My notification";
+    this.notificationService.create(title).subscribe();
   }
 
   onCardListDropped(board: Board, event: CdkDragDrop<CardList[]>) {
@@ -82,11 +89,11 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  displayNotification() {
+  displayNotification(numberOfCard: string) {
     if (Notification.permission == 'granted') {
       navigator.serviceWorker.getRegistration().then(function(reg) {
         var options = {
-          body: 'My new card!!!',
+          body: numberOfCard,
           vibrate: [100, 50, 100],
           data: {
             dateOfArrival: Date.now(),

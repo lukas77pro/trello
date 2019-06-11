@@ -57,6 +57,7 @@ import { CurrentUserComponent } from './navbar/current-user/current-user.compone
 import { InvitationsComponent } from './navbar/current-user/invitations/invitations.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { environment } from '../environments/environment';
     AvatarComponent,
     TeamMemberComponent,
     CurrentUserComponent,
-    InvitationsComponent
+    InvitationsComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
