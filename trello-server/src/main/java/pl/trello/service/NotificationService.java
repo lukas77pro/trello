@@ -18,7 +18,6 @@ public class NotificationService {
     public Notification create(String title) throws NotFoundException {
         Notification notification = build(title);
         noti.add(notification);
-        System.out.println("NOTIFICATION CREATED");
         return notification;
     }
 
@@ -28,5 +27,9 @@ public class NotificationService {
                 .title(title)
                 .description("")
                 .build();
+    }
+
+    public List<Notification> getAllNotifications() {
+        return noti;
     }
 }

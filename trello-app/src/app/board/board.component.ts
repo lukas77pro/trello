@@ -104,8 +104,6 @@ export class BoardComponent implements OnInit {
       });
     }
   }
-
-
 }
 
 export interface CardData {

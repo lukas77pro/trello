@@ -12,8 +12,14 @@ export class NotificationService {
   constructor(private httpClient: HttpClient, private authService: AuthService) {
    }
 
-   create(title: string): Observable<Notification> {
+  create(title: string): Observable<Notification> {
     return this.httpClient.post<Notification>(`${this.BASE_URL}/notification`, title, {
+      headers: this.authService.getAuthHeader()
+    });
+  }
+
+  getAll(): Observable<Notification[]> {
+    return this.httpClient.get<Notification[]>(`${this.BASE_URL}/notification`, {
       headers: this.authService.getAuthHeader()
     });
   }
