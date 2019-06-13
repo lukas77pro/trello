@@ -1,5 +1,7 @@
 package pl.trello.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.trello.core.AlreadyExistsException;
@@ -17,6 +19,7 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private UserRepository userRepository;
     private ImageRepository imageRepository;
     private AuthorityRepository authorityRepository;
@@ -40,7 +43,9 @@ public class UserService {
         } else if (userRepository.existsByEmail(userData.getEmail())) {
             throw new AlreadyExistsException("User with email '" + userData.getEmail() + "' already exists");
         }
-        userRepository.save(build(userData));
+        logger.info("username: {}", userData.getUsername());
+        User u = userRepository.save(build(userData));
+        logger.info("username u: {}", u.getPassword());
     }
 
     public void setImageId(String userId, String imageId) throws NotFoundException {
