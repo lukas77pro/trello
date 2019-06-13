@@ -1,11 +1,7 @@
 package pl.trello.rest;
-
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.trello.core.NotFoundException;
-import pl.trello.model.Board;
-import pl.trello.model.Notification;
-import pl.trello.model.User;
+import pl.trello.model.AppNotification;
 import pl.trello.service.NotificationService;
 
 import java.util.List;
@@ -21,12 +17,12 @@ public class NotificationRestController {
     }
 
     @GetMapping
-    public List<Notification> getAll() {
-        return notificationService.getAllNotifications();
+    public List<AppNotification> getAll(@RequestParam String userId) {
+        return notificationService.getAllNotifications(userId);
     }
 
     @PostMapping
-    public Notification create(@RequestBody String title) throws NotFoundException {
-        return notificationService.create(title);
+    public AppNotification create(@RequestBody AppNotification notification) throws NotFoundException {
+        return notificationService.create(notification);
     }
 }

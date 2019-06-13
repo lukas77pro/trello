@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
 import { NotificationService } from 'src/service/notification.service';
+import { AppNotification } from 'src/model/app-notification';
+import { UserService } from 'src/service/user.service';
+import { BoardService } from 'src/service/board.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +12,7 @@ import { NotificationService } from 'src/service/notification.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService, private notificationService: NotificationService) {}
+  constructor(private authService: AuthService, private notificationService: NotificationService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.authService.loadUser();
@@ -17,36 +20,56 @@ export class AppComponent implements OnInit {
     Notification.requestPermission(function(status) {
       console.log('Notification permission status:', status);});
 
-      this.showAllNotification();
-
-  }
-
-  showAllNotification(){
-    var notificationList = this.notificationService.getAll();
-    notificationList.subscribe(notificationList => {
-        var len = notificationList.length;
-        for(var i = 0; i < len; i++){
-          this.displayNotification(notificationList[i], i);
-        }
-    });
-  }
-
-  displayNotification(notifi: Notification, it: Number) {
     if (Notification.permission == 'granted') {
-      navigator.serviceWorker.getRegistration().then(function(reg) {
-        var options = {
-          body: notifi.title+it.toString(),
-          vibrate: [100, 50, 100],
-          data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
-          }
-        };
-        console.log(reg);
-        reg.showNotification('Notification from server!', options);
-      });
+      this.showAllNotification(this.authService.user.id);
+      console.log(Date.now);
     }
   }
 
+  showAllNotification(userId: string){
+    console.log("!!!!!!!!!!"+userId);
+    var notificationList = this.notificationService.getAll(userId);
+    notificationList.subscribe(notificationList => {
+      console.log(notificationList[0]);
+      this.filterNotification(notificationList);
+    });
+  }
 
+  filterNotification(notifiList: AppNotification[]){
+    var len = notifiList.length;
+    var name : string;
+    for(var i = 0; i < len; i++){
+      console.log("Login from authServis "+this.authService.user.id);
+      console.log("notification Author "+notifiList[i].authorid);
+      
+      if(notifiList[i].authorid != this.authService.user.id)
+      {
+        console.log("after match different user !=");
+          
+          console.log("User name: "+this.authService.user.username);
+          console.log("Object Noti "+notifiList[i].type);
+          this.displayNotification(notifiList[i], this.authService.user.username);
+      }
+    }
+  }
+
+  displayNotification(notifi: AppNotification, authorName: string){
+    if(notifi.type == "NewCard"){
+      this.displayNotificationNewCard(notifi, authorName);
+    }
+  }
+
+  displayNotificationNewCard(notifi: AppNotification, authorName: string) {
+    navigator.serviceWorker.getRegistration().then(function(reg) {
+      var options = {
+        body: "User: "+authorName+" create new card!",
+        vibrate: [100, 50, 100],
+        data: {
+          dateOfArrival: Date.now(),
+          primaryKey: 1
+        }
+      };
+      reg.showNotification('Notification from server!', options);
+    });
+  }
 }

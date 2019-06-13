@@ -13,6 +13,8 @@ import { CardService } from 'src/service/card.service';
 import { MatDialog } from '@angular/material';
 import { CardComponent } from '../card/card.component';
 import { NotificationService } from 'src/service/notification.service';
+import { User } from 'src/model/user';
+import { AppNotification } from 'src/model/app-notification';
 
 @Component({
   selector: 'app-board',
@@ -56,12 +58,13 @@ export class BoardComponent implements OnInit {
         cardList.cards.push(card);
         this.cardTitle.setValue('');
       });
-      this.displayNotification(cardList.cards.length.toString());
+      console.log(board.userId);
+      this.createNotification(board.userId, "NewCard", board.id)
   }
 
-  createNotification() {
-    var title = "My notification";
-    this.notificationService.create(title).subscribe();
+  createNotification(userid: string, type: string, boardid: string) {
+    var notification: AppNotification = {id: "", authorid: userid, type: type, description: boardid};
+    this.notificationService.create(notification).subscribe();
   }
 
   onCardListDropped(board: Board, event: CdkDragDrop<CardList[]>) {
@@ -87,22 +90,6 @@ export class BoardComponent implements OnInit {
         card: card
       }
     });
-  }
-
-  displayNotification(numberOfCard: string) {
-    if (Notification.permission == 'granted') {
-      navigator.serviceWorker.getRegistration().then(function(reg) {
-        var options = {
-          body: numberOfCard,
-          vibrate: [100, 50, 100],
-          data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
-          }
-        };
-        reg.showNotification('New card added!', options);
-      });
-    }
   }
 }
 

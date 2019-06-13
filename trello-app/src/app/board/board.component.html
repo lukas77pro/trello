@@ -17,7 +17,7 @@
                         <mat-form-field style="margin-right: 4px">
                             <input matNativeControl placeholder="Nowa karta" [formControl]="cardTitle">
                         </mat-form-field>
-                        <button mat-flat-button color="primary" (click)="createNotification()">Wyslij</button>
+                        <button mat-flat-button color="primary" (click)="createCard(board, cardList)">Dodaj</button>
                     </div>    
                 </mat-card-actions>         
             </mat-card>            
