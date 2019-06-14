@@ -58,8 +58,7 @@ export class BoardComponent implements OnInit {
         cardList.cards.push(card);
         this.cardTitle.setValue('');
       });
-      console.log(board.userId);
-      this.createNotification(board.userId, "NewCard", board.id)
+      this.createNotification(board.userId, "NewCard", board.id);
   }
 
   createNotification(userid: string, type: string, boardid: string) {

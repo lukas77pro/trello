@@ -9,6 +9,8 @@ import { UserService } from 'src/service/user.service';
 import { User } from 'src/model/user';
 import { AuthService } from 'src/service/auth.service';
 import { Observable } from 'rxjs';
+import { AppNotification } from 'src/model/app-notification';
+import { NotificationService } from 'src/service/notification.service';
 
 @Component({
   selector: 'app-team',
@@ -23,6 +25,7 @@ export class TeamComponent implements OnInit {
   constructor(private teamService: TeamService,
               private userService: UserService,
               private authService: AuthService,
+              private notificationService: NotificationService,
               private dialogRef: MatDialogRef<CreateTeamComponent>,
               @Inject(MAT_DIALOG_DATA) public teamId: string) {
     this.team$ = this.teamService.get(teamId);
@@ -42,7 +45,14 @@ export class TeamComponent implements OnInit {
     this.teamService
       .addInvitation(team.id, user.id)
       .subscribe(() => team.invitedUsers.push(user));
+      this.createNotification(this.authService.user.id, "NewInvitation", "to team");
+      console.log("Add invitation notification");
   }
+
+createNotification(userid: string, type: string, boardid: string) {
+  var notification: AppNotification = {id: "", authorid: userid, type: type, description: boardid};
+  this.notificationService.create(notification).subscribe();
+}
 
   cancelInvitation(user: User, team: Team) {
     this.teamService

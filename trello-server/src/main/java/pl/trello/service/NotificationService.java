@@ -33,18 +33,17 @@ public class NotificationService {
                 .build();
     }
 
+    public List<AppNotification> getNoti() {
+        return noti;
+    }
+
     public List<AppNotification> getAllNotifications(String userid)
     {
-
         UpdateData data = getTimeForUser(userid);
         List<AppNotification> returnNoti = new ArrayList<>();
 
         for(int i = 0; i < noti.size(); i++){
-            System.out.println("FORRRRRR");
-            System.out.println("NOTIFICATION TIME"+noti.get(i).getDate().getTime());
-            System.out.println("USER LAST TIME"+data.getLastUpdate().getTime());
             if(noti.get(i).getDate().getTime() >= data.getLastUpdate().getTime()){
-                System.out.println("IF");
                 returnNoti.add(noti.get(i));
             }
         }
@@ -57,7 +56,6 @@ public class NotificationService {
 
         for (int i = 0; i < updateData.size(); i++) {
             if (userid.equals(updateData.get(i).getUserId())) {
-                System.out.println("git");
                 return updateData.get(i);
             }
         }

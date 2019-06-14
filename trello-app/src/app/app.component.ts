@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
   }
 
   showAllNotification(userId: string){
-    console.log("!!!!!!!!!!"+userId);
     var notificationList = this.notificationService.getAll(userId);
     notificationList.subscribe(notificationList => {
       console.log(notificationList[0]);
@@ -38,31 +37,35 @@ export class AppComponent implements OnInit {
   filterNotification(notifiList: AppNotification[]){
     var len = notifiList.length;
     var name : string;
-    for(var i = 0; i < len; i++){
-      console.log("Login from authServis "+this.authService.user.id);
-      console.log("notification Author "+notifiList[i].authorid);
-      
+    for(var i = 0; i < len; i++){   
       if(notifiList[i].authorid != this.authService.user.id)
       {
-        console.log("after match different user !=");
-          
-          console.log("User name: "+this.authService.user.username);
-          console.log("Object Noti "+notifiList[i].type);
-          this.displayNotification(notifiList[i], this.authService.user.username);
+          this.createSpecificNotification(notifiList[i], this.authService.user.username);
       }
     }
   }
 
-  displayNotification(notifi: AppNotification, authorName: string){
-    if(notifi.type == "NewCard"){
-      this.displayNotificationNewCard(notifi, authorName);
+  createSpecificNotification(notifi: AppNotification, authorName: string){
+    switch(notifi.type){
+      case "NewCard": 
+        this.displayNotification(notifi, authorName, "create new card!");
+        break;
+      case "NewBoard":
+        this.displayNotification(notifi, authorName, "create new board!");
+        break;
+      case "NewInvitation":
+        this.displayNotification(notifi, authorName, "send you an invitation to team");
+        break;
+      case "NewComment":
+        this.displayNotification(notifi, authorName, "add new comment to card");
+        break;
     }
   }
 
-  displayNotificationNewCard(notifi: AppNotification, authorName: string) {
+  displayNotification(notifi: AppNotification, authorName: string, message: string) {
     navigator.serviceWorker.getRegistration().then(function(reg) {
       var options = {
-        body: "User: "+authorName+" create new card!",
+        body: "User: "+authorName+" "+message,
         vibrate: [100, 50, 100],
         data: {
           dateOfArrival: Date.now(),

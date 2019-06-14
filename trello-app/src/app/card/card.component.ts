@@ -8,6 +8,8 @@ import { User } from 'src/model/user';
 import { CardData } from '../board/board.component';
 import { Comment } from 'src/model/comment';
 import { AuthService } from 'src/service/auth.service';
+import { AppNotification } from 'src/model/app-notification';
+import { NotificationService } from 'src/service/notification.service';
 
 @Component({
   selector: 'app-card',
@@ -24,6 +26,7 @@ export class CardComponent {
   constructor(private cardService: CardService,
               private commentService: CommentService,
               private authService: AuthService,
+              private notificationService: NotificationService,
               @Inject(MAT_DIALOG_DATA) public data: CardData) {
   }
 
@@ -60,6 +63,12 @@ export class CardComponent {
         }
         this.cancelComment();
       });
+      this.createNotification(this.authService.user.id, "NewComment", "to card");
+  }
+
+  createNotification(userid: string, type: string, boardid: string) {
+    var notification: AppNotification = {id: "", authorid: userid, type: type, description: boardid};
+    this.notificationService.create(notification).subscribe();
   }
 
   toggleComments() {

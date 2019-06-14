@@ -21,6 +21,12 @@ public class NotificationRestController {
         return notificationService.getAllNotifications(userId);
     }
 
+    @GetMapping("/all")
+    public List<AppNotification> getNoti() {
+        return notificationService.getNoti();
+    }
+
+
     @PostMapping
     public AppNotification create(@RequestBody AppNotification notification) throws NotFoundException {
         return notificationService.create(notification);

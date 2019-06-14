@@ -5,6 +5,8 @@ import { Board } from 'src/model/board';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { AppNotification } from 'src/model/app-notification';
+import { NotificationService } from 'src/service/notification.service';
 
 @Component({
   selector: 'app-board-list',
@@ -21,7 +23,7 @@ export class BoardListComponent {
     this.boards$ = this.boardService.getAll(this.teamId);
   }
 
-  constructor(private boardService: BoardService) {
+  constructor(private boardService: BoardService, private notificationService: NotificationService) {
   }
 
   createBoard(boards: Board[]) {
@@ -29,6 +31,12 @@ export class BoardListComponent {
       boards.push(board);
       this.boardTitle.setValue('');
     });
+    this.createNotification(boards[boards.length-1].userId, "NewBoard", "to list");
+  }
+
+  createNotification(userid: string, type: string, boardid: string) {
+    var notification: AppNotification = {id: "", authorid: userid, type: type, description: boardid};
+    this.notificationService.create(notification).subscribe();
   }
 
   deleteBoard(id: string, boards: Board[]) {

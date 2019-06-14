@@ -54,6 +54,7 @@ export class DashboardComponent implements Subscriber, OnInit, OnDestroy {
     if (event instanceof UserJoinedTeam) {
       console.log(event.payload);
       this.teams.push(event.payload);
+      this.displayNotificationUserJoined(this.teams[this.teams.length-1]);
     }
   }
 
@@ -61,7 +62,7 @@ export class DashboardComponent implements Subscriber, OnInit, OnDestroy {
     if (Notification.permission == 'granted') {
       navigator.serviceWorker.getRegistration().then(function(reg) {
         var options = {
-          body: team.name,
+          body: "You successfully join to: "+team.name,
           vibrate: [100, 50, 100],
           data: {
             dateOfArrival: Date.now(),
