@@ -5,17 +5,17 @@ services:
     image: trello-server:latest
     build: ./trello-server
     ports:
-      - 8098:8098
+      - 8080:8080
     depends_on:
       - mongo
-  trello-app:
-    container_name: trello-app
-    image: trello-app:latest
-    build: ./trello-app
-    ports:
-      - 8080:4200
-    depends_on:
-      - trello-server
+#  trello-app:
+#    container_name: trello-app
+#    image: trello-app:latest
+#    build: ./trello-app
+#    ports:
+#      - 8098:4200
+#    depends_on:
+#      - trello-server
   mongo:
     image: mongo:latest
     ports:
